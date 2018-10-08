@@ -1,0 +1,32 @@
+plugins {
+    id 'idea'
+     id "org.jetbrains.kotlin.jvm" version "1.2.71"
+}
+
+subprojects {
+    apply plugin: 'idea'
+    apply plugin: 'kotlin'
+    
+    group = 'org.burbridge.springsandbox'
+    version = '0.1'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+      compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    }
+}
+
+project(':api') {
+    dependencies {
+        compile project(':common')
+    }
+}
+
+project(':frontend') {
+    dependencies {
+        compile project(':common')
+    }
+}
