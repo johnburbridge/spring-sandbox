@@ -59,8 +59,8 @@ subprojects {
 
     dependencies {
         compile('org.jetbrains.kotlin:kotlin-stdlib-jdk8')
-        compile("org.jetbrains.kotlin:kotlin-reflect")
-        compile("io.github.microutils:kotlin-logging:1.5.6")
+        compile('org.jetbrains.kotlin:kotlin-reflect')
+        compile('io.github.microutils:kotlin-logging:1.5.6')
         compile('com.fasterxml.jackson.module:jackson-module-kotlin')
 
         testCompile('org.springframework.boot:spring-boot-starter-test') {
