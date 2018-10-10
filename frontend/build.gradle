@@ -14,5 +14,5 @@ dependencies {
 }
 
 bootJar {
-    baseName = "${project.name}"
+    baseName = "${rootProject.name}-${project.name}"
 }

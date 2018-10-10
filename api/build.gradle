@@ -23,5 +23,5 @@ dependencyManagement {
 }
 
 bootJar {
-    baseName = "${project.name}"
+    baseName = "${rootProject.name}-${project.name}"
 }
