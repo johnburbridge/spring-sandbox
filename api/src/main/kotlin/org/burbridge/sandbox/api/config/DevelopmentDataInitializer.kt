@@ -28,4 +28,11 @@ class DevelopmentDataInitializer {
         ))
         articleRepository.flush()
     }
+
+    fun clean() {
+        articleRepository.deleteAll()
+        articleRepository.flush()
+        userRepository.deleteAll()
+        userRepository.flush()
+    }
 }
