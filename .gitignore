@@ -1,5 +1,5 @@
 .gradle
-/build/
+*/build/
 !gradle/wrapper/gradle-wrapper.jar
 
 ### STS ###
@@ -16,5 +16,5 @@
 *.iws
 *.iml
 *.ipr
-/out/
+*/out/
 
