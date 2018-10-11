@@ -4,7 +4,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "articles")
-data class Article(
+class Article(
         @Id
         @GeneratedValue
         val id: Long,
@@ -13,4 +13,4 @@ data class Article(
         val content: String,
         @ManyToOne
         val author: User
-)
+) : AuditableEntity()
