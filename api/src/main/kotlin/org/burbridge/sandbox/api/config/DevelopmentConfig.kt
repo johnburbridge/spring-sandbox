@@ -1,7 +1,5 @@
 package org.burbridge.sandbox.api.config
 
-import org.burbridge.sandbox.api.repository.UserRepository
-import org.burbridge.springsandbox.domain.User
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Bean
@@ -12,15 +10,13 @@ import org.springframework.context.annotation.PropertySource
 @Configuration
 @Profile("development")
 @PropertySource("development.properties")
-class DevConfig {
+class DevelopmentConfig {
 
     @Autowired
-    lateinit var userRepo: UserRepository
+    lateinit var developmentDataInitializer: DevelopmentDataInitializer
 
     @Bean
     fun initData() = CommandLineRunner {
-        userRepo.saveAll(setOf(
-                User(1L, "jburbridge", "John", "Burbridge")
-        ))
+        developmentDataInitializer.initialize()
     }
 }
