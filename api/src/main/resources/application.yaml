@@ -1,4 +1,4 @@
-# PRODUCTION PROPERTIES
+# DEFAULT PROPERTIES
 server:
   port: 8080
   tomcat:
@@ -7,16 +7,10 @@ server:
       enabled: true
       pattern: common
 spring:
-  datasource:
-    url: jdbc:h2:~/.sandbox;AUTO_SERVER=TRUE;AUTO_SERVER_PORT=9090
+  cache:
+    type: simple
   jpa:
     properties:
-      hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
       jadira:
         usertype:
           autoRegisterUserTypes: true
-    hibernate:
-      ddl-auto: create
-  cache:
-    type: simple

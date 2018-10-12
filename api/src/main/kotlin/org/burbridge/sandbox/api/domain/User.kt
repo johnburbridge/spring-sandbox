@@ -1,4 +1,4 @@
-package org.burbridge.springsandbox.domain
+package org.burbridge.sandbox.api.domain
 
 import javax.persistence.*
 

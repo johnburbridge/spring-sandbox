@@ -1,4 +1,4 @@
-package org.burbridge.springsandbox.domain
+package org.burbridge.sandbox.api.domain
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import javax.persistence.EntityListeners

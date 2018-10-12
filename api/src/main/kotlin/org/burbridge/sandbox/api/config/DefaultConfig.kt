@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing
 import java.util.*
 
 @Configuration
-@EntityScan("org.burbridge.springsandbox.domain")
+@EntityScan("org.burbridge.sandbox.api.domain")
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
 @Profile("default")
 class DefaultConfig {

@@ -1,6 +1,6 @@
 package org.burbridge.sandbox.api.repository
 
-import org.burbridge.springsandbox.domain.Article
+import org.burbridge.sandbox.api.domain.Article
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface ArticleRepository : JpaRepository<Article, Long> {

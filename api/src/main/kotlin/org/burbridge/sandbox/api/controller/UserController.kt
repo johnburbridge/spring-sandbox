@@ -3,7 +3,7 @@ package org.burbridge.sandbox.api.controller
 import mu.KotlinLogging
 import org.burbridge.sandbox.api.error.RecordNotFoundException
 import org.burbridge.sandbox.api.repository.UserRepository
-import org.burbridge.springsandbox.domain.User
+import org.burbridge.sandbox.api.domain.User
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.http.MediaType
