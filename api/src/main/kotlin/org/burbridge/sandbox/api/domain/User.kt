@@ -1,5 +1,6 @@
 package org.burbridge.sandbox.api.domain
 
+import org.burbridge.spring.common.dto.AuthorDto
 import javax.persistence.*
 
 @Entity
@@ -12,4 +13,13 @@ data class User(
         val username: String,
         val firstName: String,
         val lastName: String
-) : AuditableEntity()
+) : AuditableEntity() {
+        fun toDto(): AuthorDto {
+                return AuthorDto(
+                        id = this.id.toInt(),
+                        firstName = this.firstName,
+                        lastName = this.lastName,
+                        username = this.username
+                )
+        }
+}
