@@ -1,8 +1,8 @@
 package org.burbridge.sandbox.api.config
 
-import org.burbridge.sandbox.api.repository.ArticleRepository
+import org.burbridge.sandbox.api.repository.TaskRepository
 import org.burbridge.sandbox.api.repository.UserRepository
-import org.burbridge.sandbox.api.domain.Article
+import org.burbridge.sandbox.api.domain.Task
 import org.burbridge.sandbox.api.domain.User
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -14,23 +14,23 @@ class DevelopmentDataInitializer {
     lateinit var userRepository: UserRepository
 
     @Autowired
-    lateinit var articleRepository: ArticleRepository
+    lateinit var taskRepository: TaskRepository
 
     fun initialize() {
         userRepository.save(
                 User(1L, "jburbridge", "John", "Burbridge")
         )
         val u1 = checkNotNull(userRepository.findByUsername("jburbridge"))
-        articleRepository.saveAll(setOf(
-                Article(id = 2L, author = u1, title = "The first post", content = "This is a rather boring first post"),
-                Article(id = 3L, author = u1, title = "The second post", content = "This is another rather boring first post"),
-                Article(id = 4L, author = u1, title = "The third post", content = "This is yet another rather boring first post!")
+        taskRepository.saveAll(setOf(
+                Task(id = 2L, author = u1, name = "task1", description = "The first task", content = "This is a rather boring first post"),
+                Task(id = 3L, author = u1, name = "task2", description = "The second task", content = "This is another rather boring first post"),
+                Task(id = 4L, author = u1, name = "task3", description = "The 3rd task", content = "This is yet another rather boring first post!")
         ))
     }
 
     fun clean() {
-        articleRepository.deleteAll()
-        articleRepository.flush()
+        taskRepository.deleteAll()
+        taskRepository.flush()
         userRepository.deleteAll()
         userRepository.flush()
     }

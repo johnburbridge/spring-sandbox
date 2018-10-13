@@ -3,12 +3,13 @@ package org.burbridge.sandbox.api.domain
 import javax.persistence.*
 
 @Entity
-@Table(name = "articles")
-class Article(
+@Table(name = "tasks")
+data class Task(
         @Id
         @GeneratedValue
         val id: Long,
-        val title: String,
+        val name: String,
+        val description: String,
         @Column(columnDefinition = "TEXT")
         val content: String,
         @ManyToOne
