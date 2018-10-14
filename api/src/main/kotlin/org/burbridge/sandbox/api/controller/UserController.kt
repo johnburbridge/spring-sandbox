@@ -4,13 +4,12 @@ import mu.KotlinLogging
 import org.burbridge.sandbox.api.error.RecordNotFoundException
 import org.burbridge.sandbox.api.repository.UserRepository
 import org.burbridge.sandbox.api.domain.User
+import org.burbridge.spring.common.dto.UserDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.EmptyResultDataAccessException
+import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 private val logger = KotlinLogging.logger {}
 
@@ -34,5 +33,17 @@ class UserController {
             logger.error("Could not find user: $username", exception)
             throw RecordNotFoundException(username)
         }
+    }
+
+    @PostMapping("/")
+    @ResponseStatus(HttpStatus.CREATED)
+    fun createUser(@RequestBody userDto: UserDto): User {
+        return userRepository.saveAndFlush(
+                User(id = 0L,
+                    username = userDto.username!!,
+                    firstName = userDto.firstName!!,
+                    lastName = userDto.lastName!!
+                )
+        )
     }
 }

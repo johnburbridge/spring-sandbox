@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import javax.annotation.Generated
 
 @Generated("com.robohorse.robopojogenerator")
-data class AuthorDto(
+data class UserDto(
 
         @field:JsonProperty("firstName")
         val firstName: String? = null,

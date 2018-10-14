@@ -7,7 +7,7 @@ import javax.annotation.Generated
 data class TaskDto(
 
         @field:JsonProperty("author")
-        val author: AuthorDto? = null,
+        val author: UserDto? = null,
 
         @field:JsonProperty("id")
         val id: Int? = null,
