@@ -45,31 +45,32 @@ class TaskControllerTest {
                     hhere.
                 """.trimIndent(),
                 author = User(id = 1L,
-                        firstName = "Fred",
-                        lastName = "Flintstone",
+                        password = "ILoveWilma",
                         username = "fflintstone"
                 )
         )
         `when`(taskRepository.saveAndFlush(any(Task::class.java))).thenReturn(taskStub)
+
+        //act
         val taskDto = TaskDto(
                 id = taskStub.id.toInt(),
                 name = taskStub.name,
                 description = taskStub.description,
                 content = taskStub.content,
                 author = UserDto(
-                        firstName = taskStub.author.firstName,
-                        lastName = taskStub.author.lastName,
+                        id = taskStub.author.id.toInt(),
+                        password = taskStub.author.password,
                         username = taskStub.author.username
                 )
         )
         val mapper = jacksonObjectMapper()
         val taskJson = mapper.writeValueAsString(taskDto)
-        //act
         val mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(URI("http://localhost:8080/tasks/"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(taskJson).with(httpBasic("user", "test")))
                 .andReturn()
+
         // assert
         val status = mvcResult.response.status
         val taskResult = mapper.readValue<TaskDto>(mvcResult.response.contentAsString, TaskDto::class.java)

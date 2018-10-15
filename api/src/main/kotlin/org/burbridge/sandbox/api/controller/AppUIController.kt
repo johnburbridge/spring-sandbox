@@ -1,6 +1,5 @@
 package org.burbridge.sandbox.api.controller
 
-import mu.KotlinLogging
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping

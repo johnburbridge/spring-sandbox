@@ -18,7 +18,7 @@ class DevelopmentDataInitializer {
 
     fun initialize() {
         userRepository.save(
-                User(1L, "jburbridge", "John", "Burbridge")
+                User(1L, "jburbridge", "Passw0rd")
         )
         val u1 = checkNotNull(userRepository.findByUsername("jburbridge"))
         taskRepository.saveAll(setOf(

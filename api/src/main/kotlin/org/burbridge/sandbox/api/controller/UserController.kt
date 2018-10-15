@@ -21,14 +21,16 @@ class UserController {
     lateinit var userRepository: UserRepository
 
     @GetMapping("/")
-    fun getAllUsers(): List<User> {
-        return userRepository.findAll()
+    fun getAllUsers(): List<UserDto> {
+        val users = userRepository.findAll()
+        val usersDto = users.map { user -> convertToDto(user) }
+        return usersDto
     }
 
     @GetMapping("/{username}")
-    fun getUserByUsername(@PathVariable username: String): User {
+    fun getUserByUsername(@PathVariable username: String): UserDto {
         try {
-            return userRepository.findByUsername(username)
+            return convertToDto(userRepository.findByUsername(username))
         } catch (exception: EmptyResultDataAccessException) {
             logger.error("Could not find user: $username", exception)
             throw RecordNotFoundException(username)
@@ -37,13 +39,21 @@ class UserController {
 
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
-    fun createUser(@RequestBody userDto: UserDto): User {
-        return userRepository.saveAndFlush(
-                User(id = 0L,
-                    username = userDto.username!!,
-                    firstName = userDto.firstName!!,
-                    lastName = userDto.lastName!!
-                )
-        )
+    fun createUser(@RequestBody userDto: UserDto): UserDto {
+        val user = convertToEntity(userDto)
+        val userCreated = userRepository.saveAndFlush(user)
+        return convertToDto(userCreated)
+    }
+
+    private fun convertToEntity(userDto: UserDto): User {
+        return User(id = userDto.id!!.toLong(),
+                username = userDto.username!!,
+                password = userDto.password!!)
+    }
+
+    private fun convertToDto(user: User): UserDto {
+        return UserDto(id = user.id.toInt(),
+                username = user.username,
+                password = user.password)
     }
 }

@@ -7,6 +7,10 @@ server:
       enabled: true
       pattern: common
 spring:
+  security:
+    user:
+      name: user
+      password: test
   cache:
     type: simple
   jpa:

@@ -21,16 +21,6 @@ class UserRepositoryTest : AbstractSeededIntegrationTest() {
     fun `Can query a user by username`() {
         val user = userRepository.findByUsername("jburbridge")
         assertNotNull(user)
-        assertEquals("Burbridge", user.lastName)
-    }
-
-    @Test
-    fun `Can get a DTO from an user entity`() {
-        val user = userRepository.findByUsername("jburbridge")
-        val userDto = user.toDto()
-        assertNotNull(userDto)
-        assertEquals(user.firstName, userDto.firstName)
-        assertEquals(user.lastName, userDto.lastName)
-        assertEquals(user.username, userDto.username)
+        assertEquals(1L, user.id)
     }
 }

@@ -36,8 +36,7 @@ class TaskController {
                     content = taskDto.content!!,
                     author = User(id = 0L,
                             username = taskDto.author?.username!!,
-                            firstName = taskDto.author?.firstName!!,
-                            lastName = taskDto.author?.lastName!!
+                            password = taskDto.author?.password!!
                     )
                 )
         )
