@@ -6,9 +6,6 @@ import javax.annotation.Generated
 @Generated("com.robohorse.robopojogenerator")
 data class TaskDto(
 
-        @field:JsonProperty("author")
-        val author: UserDto? = null,
-
         @field:JsonProperty("id")
         val id: Int? = null,
 

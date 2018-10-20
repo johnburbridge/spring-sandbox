@@ -12,7 +12,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 
 @ExtendWith(SpringExtension::class)
 @SpringBootTest
-@ActiveProfiles(value = ["default","test"])
+@ActiveProfiles(value = ["default", "test"])
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class AbstractSeededIntegrationTest {
 

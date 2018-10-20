@@ -16,13 +16,14 @@ class TaskRepositoryTest : AbstractSeededIntegrationTest() {
         val tasks = taskRepository.findAll()
         assertTrue(tasks.isNotEmpty())
         assertEquals(3, tasks.count())
+        assertEquals("Task1", tasks.first().name)
     }
 
     @Test
     fun `Can query tasks by author`() {
-        val tasks = taskRepository.findByAuthor_Username("jburbridge")
+        val tasks = taskRepository.findByName("Task1")
         assertTrue(tasks.isNotEmpty())
-        assertEquals(3, tasks.count())
-        assertEquals("Passw0rd", tasks.first().author.password)
+        assertEquals(1, tasks.count())
+        assertEquals("Task1", tasks.first().name)
     }
 }

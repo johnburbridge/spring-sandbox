@@ -11,7 +11,5 @@ data class Task(
         val name: String,
         val description: String,
         @Column(columnDefinition = "TEXT")
-        val content: String,
-        @ManyToOne
-        val author: User
+        val content: String
 ) : AuditableEntity()
