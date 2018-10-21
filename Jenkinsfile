@@ -4,7 +4,7 @@ pipeline {
     stage('API Test') {
       steps {
         sh './gradlew clean api:test'
-        junit '**/build/test-results/test/*.xml'
+        junit(testResults: 'api/build/test-results/test/*.xml', allowEmptyResults: true)
       }
     }
     stage('API Build') {
