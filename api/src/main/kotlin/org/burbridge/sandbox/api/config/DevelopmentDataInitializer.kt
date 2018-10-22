@@ -1,9 +1,9 @@
 package org.burbridge.sandbox.api.config
 
-import org.burbridge.sandbox.api.repository.ArticleRepository
+import org.burbridge.sandbox.api.domain.Task
+import org.burbridge.sandbox.api.domain.User
+import org.burbridge.sandbox.api.repository.TaskRepository
 import org.burbridge.sandbox.api.repository.UserRepository
-import org.burbridge.springsandbox.domain.Article
-import org.burbridge.springsandbox.domain.User
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
@@ -14,18 +14,23 @@ class DevelopmentDataInitializer {
     lateinit var userRepository: UserRepository
 
     @Autowired
-    lateinit var articleRepository: ArticleRepository
+    lateinit var taskRepository: TaskRepository
 
     fun initialize() {
-        userRepository.saveAndFlush(
-                User(1L, "jburbridge", "John", "Burbridge")
+        userRepository.save(
+                User(1L, "jburbridge", "Passw0rd")
         )
-        val u1 = checkNotNull(userRepository.findById(1L)).get()
-        articleRepository.saveAll(setOf(
-                Article(id = 2L, author = u1, title = "The first post", content = "This is a rather boring first post"),
-                Article(id = 3L, author = u1, title = "The second post", content = "This is another rather boring first post"),
-                Article(id = 4L, author = u1, title = "The third post", content = "This is yet another rather boring first post!")
+        taskRepository.saveAll(setOf(
+                Task(id = 2L, name = "Task1", description = "The first task", content = "This is a rather boring first post"),
+                Task(id = 3L, name = "Task2", description = "The second task", content = "This is another rather boring first post"),
+                Task(id = 4L, name = "Task3", description = "The 3rd task", content = "This is yet another rather boring first post!")
         ))
-        articleRepository.flush()
+    }
+
+    fun clean() {
+        taskRepository.deleteAll()
+        taskRepository.flush()
+        userRepository.deleteAll()
+        userRepository.flush()
     }
 }

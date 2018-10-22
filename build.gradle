@@ -19,8 +19,11 @@ buildscript {
     }
 }
 
-subprojects {
+allprojects {
     apply plugin: 'idea'
+}
+
+subprojects {
     apply plugin: 'kotlin'
     apply plugin: 'kotlin-spring'
     apply plugin: 'io.spring.dependency-management'
@@ -73,6 +76,17 @@ subprojects {
     dependencyManagement {
         imports {
             mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
+        }
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
+    idea {
+        module {
+            inheritOutputDirs = false
+            outputDir = file("$buildDir/classes/kotlin/main")
         }
     }
 }

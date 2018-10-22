@@ -1,6 +1,6 @@
 package org.burbridge.sandbox.api.repository
 
-import org.burbridge.springsandbox.domain.User
+import org.burbridge.sandbox.api.domain.User
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
