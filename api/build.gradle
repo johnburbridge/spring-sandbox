@@ -1,5 +1,6 @@
-apply plugin: 'org.springframework.boot'
 apply plugin: 'kotlin-jpa'
+apply plugin: 'com.palantir.docker'
+apply plugin: 'org.springframework.boot'
 
 dependencies {
     compile project(':common')
@@ -26,6 +27,10 @@ dependencyManagement {
     }
 }
 
+springBoot {
+    buildInfo()
+}
+
 bootJar {
     baseName = "${rootProject.name}-${project.name}"
 }
@@ -35,4 +40,12 @@ test {
             'GOOGLE_OAUTH_CLIENT_ID': 'client_id',
             'GOOGLE_OAUTH_CLIENT_SECRET': 'client_secret'
     ]
+}
+
+docker {
+    dependsOn bootJar
+    name "gcr.io/spring-sandbox-219017/${bootJar.baseName}"
+    tags "${project.version}"
+    files bootJar.archivePath
+    buildArgs(['JAR_FILE': "${bootJar.archiveName}"])
 }
