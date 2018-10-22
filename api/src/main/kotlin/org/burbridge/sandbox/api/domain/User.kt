@@ -1,4 +1,4 @@
-package org.burbridge.springsandbox.domain
+package org.burbridge.sandbox.api.domain
 
 import javax.persistence.*
 
@@ -8,8 +8,7 @@ data class User(
         @Id
         @GeneratedValue
         val id: Long,
-        @Column(unique = true)
+        @Column(unique = true, nullable = false)
         val username: String,
-        val firstName: String,
-        val lastName: String
+        val password: String
 ) : AuditableEntity()

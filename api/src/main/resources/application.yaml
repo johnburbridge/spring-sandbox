@@ -1,4 +1,4 @@
-# PRODUCTION PROPERTIES
+# DEFAULT PROPERTIES
 server:
   port: 8080
   tomcat:
@@ -7,16 +7,28 @@ server:
       enabled: true
       pattern: common
 spring:
-  datasource:
-    url: jdbc:h2:~/.sandbox;AUTO_SERVER=TRUE;AUTO_SERVER_PORT=9090
+  #  security:
+  #    user:
+  #      name: user
+  #      password: test
+  cache:
+    type: simple
   jpa:
     properties:
-      hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
       jadira:
         usertype:
           autoRegisterUserTypes: true
-    hibernate:
-      ddl-auto: create
-  cache:
-    type: simple
+security:
+  oauth2:
+    client:
+      client-id: ${GOOGLE_OAUTH_CLIENT_ID}
+      client-secret: ${GOOGLE_OAUTH_CLIENT_SECRET}
+      access-token-uri: https://www.googleapis.com/oauth2/v3/token
+      userAuthorizationUri: https://accounts.google.com/o/oauth2/auth
+      tokenName: oauth_token
+      authenticationScheme: query
+      clientAuthenticationScheme: form
+      scope: profile
+    resource:
+      user-info-uri: https://www.googleapis.com/userinfo/v2/me
+      prefer-token-info: false
