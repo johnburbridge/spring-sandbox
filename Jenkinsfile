@@ -10,6 +10,7 @@ pipeline {
     stage('API Build') {
       steps {
         sh './gradlew api:build'
+        archiveArtifacts 'api/build/libs/*.jar'
       }
     }
   }
