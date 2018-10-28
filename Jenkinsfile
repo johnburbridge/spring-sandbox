@@ -3,8 +3,9 @@ pipeline {
   stages {
     stage('API Test') {
       steps {
-        sh './gradlew clean api:test'
+        sh './gradlew clean api:jacocoTestReport api:test'
         junit(testResults: 'api/build/test-results/test/*.xml', allowEmptyResults: true)
+        jacoco(buildOverBuild: true, execPattern: '**/**.exec', exclusionPattern: '**/*Test*.class,**/*dto*/*,**/*model*/*', classPattern: '**/classes', minimumLineCoverage: '75', maximumMethodCoverage: '85', sourcePattern: '**/src/main/kotlin')
       }
     }
     stage('API Build') {
