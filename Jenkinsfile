@@ -14,5 +14,11 @@ pipeline {
         archiveArtifacts 'api/build/libs/*.jar'
       }
     }
+    stage('API Container') {
+      steps {
+        sh './gradlew docker'
+        sh './gradle dockerPush'
+      }
+    }
   }
 }
