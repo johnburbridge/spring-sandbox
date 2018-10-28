@@ -17,7 +17,7 @@ pipeline {
     stage('API Container') {
       steps {
         sh './gradlew docker'
-        sh './gradle dockerPush'
+        sh './gradlew dockerPush'
       }
     }
   }
