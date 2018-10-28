@@ -26,6 +26,7 @@ allprojects {
 subprojects {
     apply plugin: 'kotlin'
     apply plugin: 'kotlin-spring'
+    apply plugin: 'jacoco'
     apply plugin: 'io.spring.dependency-management'
     
     group = "org.burbridge.${rootProject.name}.${project.name}"
@@ -81,6 +82,10 @@ subprojects {
 
     test {
         useJUnitPlatform()
+    }
+
+    jacoco {
+        toolVersion = '0.8.2'
     }
 
     idea {
