@@ -38,6 +38,7 @@ subprojects {
     ext {
         springBootVersion = '2.0.5.RELEASE'
         springCloudVersion = 'Finchley.RELEASE'
+        gcpProjectName = 'spring-sandbox-219017'
     }
 
     compileKotlin {
