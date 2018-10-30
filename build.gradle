@@ -16,8 +16,11 @@ buildscript {
         classpath("org.jetbrains.kotlin:kotlin-noarg:${kotlinVersion}")
         classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
         classpath("gradle.plugin.com.palantir.gradle.docker:gradle-docker:${dockerVersion}")
+        classpath "gradle.plugin.io.zensoft.versioning:versioning-plugin:1.0.0"
     }
 }
+
+apply plugin: "io.zensoft.versioning"
 
 allprojects {
     apply plugin: 'idea'
@@ -30,7 +33,7 @@ subprojects {
     apply plugin: 'io.spring.dependency-management'
     
     group = "org.burbridge.${rootProject.name}.${project.name}"
-    version = '0.0.2-SNAPSHOT'
+    version = rootProject.version
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
