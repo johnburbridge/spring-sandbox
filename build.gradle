@@ -16,14 +16,24 @@ buildscript {
         classpath("org.jetbrains.kotlin:kotlin-noarg:${kotlinVersion}")
         classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
         classpath("gradle.plugin.com.palantir.gradle.docker:gradle-docker:${dockerVersion}")
-        classpath "gradle.plugin.io.zensoft.versioning:versioning-plugin:1.0.0"
+        classpath "gradle.plugin.io.toolebox:gradle-git-versioner:1.1.1"
     }
 }
 
-apply plugin: "io.zensoft.versioning"
-
 allprojects {
     apply plugin: 'idea'
+    apply plugin: "io.toolebox.git-versioner"
+
+    versioner {
+        tag {
+            prefix = 'v'
+        }
+        startFrom {
+            major = 0
+            minor = 0
+            patch = 4
+        }
+    }
 }
 
 subprojects {
@@ -31,7 +41,7 @@ subprojects {
     apply plugin: 'kotlin-spring'
     apply plugin: 'jacoco'
     apply plugin: 'io.spring.dependency-management'
-    
+
     group = "org.burbridge.${rootProject.name}.${project.name}"
     version = rootProject.version
 
