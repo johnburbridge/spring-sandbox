@@ -10,13 +10,4 @@ import org.springframework.context.annotation.PropertySource
 @Configuration
 @Profile("development")
 @PropertySource("development.properties")
-class DevelopmentConfig {
-
-    @Autowired
-    lateinit var developmentDataInitializer: DevelopmentDataInitializer
-
-    @Bean
-    fun initData() = CommandLineRunner {
-        developmentDataInitializer.initialize()
-    }
-}
+class DevelopmentConfig

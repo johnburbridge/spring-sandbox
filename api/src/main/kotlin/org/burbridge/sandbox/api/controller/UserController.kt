@@ -1,9 +1,9 @@
 package org.burbridge.sandbox.api.controller
 
 import mu.KotlinLogging
-import org.burbridge.sandbox.api.domain.User
+import org.burbridge.sandbox.api.domain.system.User
 import org.burbridge.sandbox.api.error.RecordNotFoundException
-import org.burbridge.sandbox.api.repository.UserRepository
+import org.burbridge.sandbox.api.repository.system.UserRepository
 import org.burbridge.spring.common.dto.UserDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.EmptyResultDataAccessException
@@ -23,17 +23,18 @@ class UserController {
     @GetMapping("/")
     fun getAllUsers(): List<UserDto> {
         val users = userRepository.findAll()
-        val usersDto = users.map { user -> toDto(user) }
+        val usersDto = users.map { user -> user.toDto() }
         return usersDto
     }
 
-    @GetMapping("/{username}")
-    fun getUserByUsername(@PathVariable username: String): UserDto {
+    @GetMapping("/{email}")
+    fun getUserByEmail(@PathVariable email: String): UserDto {
         try {
-            return toDto(userRepository.findByUsername(username))
+            val user = userRepository.findByEmail(email)
+            return user!!.toDto()
         } catch (exception: EmptyResultDataAccessException) {
-            logger.error("Could not find user: $username", exception)
-            throw RecordNotFoundException(username)
+            logger.error("Could not find user: $email", exception)
+            throw RecordNotFoundException(email)
         }
     }
 
@@ -42,18 +43,16 @@ class UserController {
     fun createUser(@RequestBody userDto: UserDto): UserDto {
         val user = toEntity(userDto)
         val userCreated = userRepository.saveAndFlush(user)
-        return toDto(userCreated)
+        return userCreated.toDto()
     }
 
     private fun toEntity(userDto: UserDto): User {
         return User(id = userDto.id!!.toLong(),
-                username = userDto.username!!,
-                password = userDto.password!!)
-    }
-
-    private fun toDto(user: User): UserDto {
-        return UserDto(id = user.id.toInt(),
-                username = user.username,
-                password = user.password)
+                email = userDto.email,
+                password = userDto.password!!,
+                firstName = userDto.firstName,
+                lastName = userDto.lastName,
+                enabled = userDto.enabled
+        )
     }
 }

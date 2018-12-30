@@ -1,6 +1,6 @@
 package org.burbridge.sandbox.api
 
-import org.burbridge.sandbox.api.config.DevelopmentDataInitializer
+import org.burbridge.sandbox.api.config.InitialDataLoader
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestInstance
@@ -17,15 +17,15 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 class AbstractSeededIntegrationTest {
 
     @Autowired
-    lateinit var developmentDataInitializer: DevelopmentDataInitializer
+    lateinit var initialDataLoader: InitialDataLoader
 
     @BeforeEach
     fun configureDatabase() {
-        developmentDataInitializer.initialize()
+        initialDataLoader.initialize()
     }
 
     @AfterEach
     fun tearDownDatabase() {
-        developmentDataInitializer.clean()
+        initialDataLoader.clean()
     }
 }
