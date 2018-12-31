@@ -1,6 +1,7 @@
-package org.burbridge.sandbox.api.domain.system
+package org.burbridge.sandbox.api.domain.core
 
 import org.burbridge.spring.common.dto.UserDto
+import java.util.*
 import javax.persistence.*
 
 @Entity
@@ -15,7 +16,9 @@ data class User(
         val password: String,
         val enabled: Boolean = false,
         var tokenExpired: Boolean = false,
-        @ManyToMany
+        val lastLogin: Date? = null,
+
+        @ManyToMany(fetch = FetchType.EAGER)
         @JoinTable(name = "users_roles",
                 joinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")],
                 inverseJoinColumns = [JoinColumn(name = "role_id", referencedColumnName = "id")])

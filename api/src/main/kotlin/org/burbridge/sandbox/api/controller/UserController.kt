@@ -1,9 +1,9 @@
 package org.burbridge.sandbox.api.controller
 
 import mu.KotlinLogging
-import org.burbridge.sandbox.api.domain.system.User
+import org.burbridge.sandbox.api.domain.core.User
 import org.burbridge.sandbox.api.error.RecordNotFoundException
-import org.burbridge.sandbox.api.repository.system.UserRepository
+import org.burbridge.sandbox.api.repository.core.UserRepository
 import org.burbridge.spring.common.dto.UserDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.EmptyResultDataAccessException

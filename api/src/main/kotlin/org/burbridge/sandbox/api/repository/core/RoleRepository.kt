@@ -1,6 +1,6 @@
-package org.burbridge.sandbox.api.repository.system
+package org.burbridge.sandbox.api.repository.core
 
-import org.burbridge.sandbox.api.domain.system.Role
+import org.burbridge.sandbox.api.domain.core.Role
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 

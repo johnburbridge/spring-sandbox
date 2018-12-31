@@ -1,18 +1,22 @@
 package org.burbridge.sandbox.api.config
 
+import mu.KotlinLogging
 import org.burbridge.sandbox.api.domain.Task
-import org.burbridge.sandbox.api.domain.system.Privilege
-import org.burbridge.sandbox.api.domain.system.Role
-import org.burbridge.sandbox.api.domain.system.User
+import org.burbridge.sandbox.api.domain.core.Privilege
+import org.burbridge.sandbox.api.domain.core.Role
+import org.burbridge.sandbox.api.domain.core.User
 import org.burbridge.sandbox.api.repository.TaskRepository
-import org.burbridge.sandbox.api.repository.system.PrivilegeRepository
-import org.burbridge.sandbox.api.repository.system.RoleRepository
-import org.burbridge.sandbox.api.repository.system.UserRepository
+import org.burbridge.sandbox.api.repository.core.PrivilegeRepository
+import org.burbridge.sandbox.api.repository.core.RoleRepository
+import org.burbridge.sandbox.api.repository.core.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.ApplicationListener
 import org.springframework.context.event.ContextRefreshedEvent
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
+
+private val logger = KotlinLogging.logger {}
 
 @Component
 class InitialDataLoader : ApplicationListener<ContextRefreshedEvent> {
@@ -31,10 +35,14 @@ class InitialDataLoader : ApplicationListener<ContextRefreshedEvent> {
     @Autowired
     lateinit var taskRepository: TaskRepository
 
+    @Autowired
+    lateinit var encoder: PasswordEncoder
+
     override fun onApplicationEvent(event: ContextRefreshedEvent) = initialize()
 
     @Transactional
     fun initialize() {
+        logger.info { "alreadySetup = $alreadySetup" }
         if (alreadySetup) return
 
         val readPrivilege = createPrivilegeIfNotFound("READ_PRIVILEGE")
@@ -46,10 +54,10 @@ class InitialDataLoader : ApplicationListener<ContextRefreshedEvent> {
         userRepository.saveAll(listOf(
                 User(
                     id = 1L,
-                    email = "johnburbridge@gmail.com",
+                    email = "johnb@metabuild.org",
                     firstName = "John",
                     lastName = "Burbridge",
-                    password = "Passw0rd",
+                    password = encoder.encode("Passw0rd"),
                     enabled = true,
                     tokenExpired = false,
                     roles = listOf(adminRole)
@@ -59,16 +67,16 @@ class InitialDataLoader : ApplicationListener<ContextRefreshedEvent> {
                         email = "test@metabuild.org",
                         firstName = "Test",
                         lastName = "User",
-                        password = "test",
+                        password = encoder.encode("test"),
                         enabled = true,
                         tokenExpired = false,
                         roles = listOf(userRole)
                 ))
         )
         taskRepository.saveAll(setOf(
-                Task(id = 2L, name = "Task1", description = "The first task", content = "This is a rather boring first post"),
-                Task(id = 3L, name = "Task2", description = "The second task", content = "This is another rather boring first post"),
-                Task(id = 4L, name = "Task3", description = "The 3rd task", content = "This is yet another rather boring first post!")
+                Task(id = 100L, name = "Task1", description = "The first task", content = "This is a rather boring first post"),
+                Task(id = 101L, name = "Task2", description = "The second task", content = "This is another rather boring first post"),
+                Task(id = 102L, name = "Task3", description = "The 3rd task", content = "This is yet another rather boring first post!")
         ))
         alreadySetup = true
     }

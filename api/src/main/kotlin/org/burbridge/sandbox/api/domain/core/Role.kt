@@ -1,4 +1,4 @@
-package org.burbridge.sandbox.api.domain.system
+package org.burbridge.sandbox.api.domain.core
 
 import javax.persistence.*
 
@@ -8,9 +8,11 @@ data class Role(
         @Id @GeneratedValue
         val id: Long = 0L,
         val name: String,
+
         @ManyToMany(mappedBy = "roles")
         var users: Collection<User> = emptyList(),
-        @ManyToMany
+
+        @ManyToMany(fetch = FetchType.EAGER)
         @JoinTable(name = "roles_privileges",
                 joinColumns = [JoinColumn(name = "role_id", referencedColumnName = "id")],
                 inverseJoinColumns = [JoinColumn(name = "privilege_id", referencedColumnName = "id")])
