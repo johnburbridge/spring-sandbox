@@ -14,3 +14,10 @@ spring:
       jadira:
         usertype:
           autoRegisterUserTypes: true
+sandbox:
+  admin:
+    username: ${SANDBOX_ADMIN_USERNAME:admin@metabuild.org}
+    password: ${SANDBOX_ADMIN_PASSWORD:Passw0rd}
+  user:
+    username: ${SANDBOX_TEST_USERNAME:test@metabuild.org}
+    password: ${SANDBOX_TEST_PASSWORD:test}

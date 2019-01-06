@@ -1,0 +1,15 @@
+sandbox:
+  api:
+    uri: http://dev.metabuild.org:8080
+    scheme: http
+    host: localhost
+    port: 9999
+  admin:
+    username: ${SANDBOX_ADMIN_USERNAME:admin@metabuild.org}
+    password: ${SANDBOX_ADMIN_PASSWORD:Passw0rd}
+  user:
+    username: ${SANDBOX_TEST_USERNAME:test@metabuild.org}
+    password: ${SANDBOX_TEST_PASSWORD:test}
+wiremock:
+  port: 9999
+  record: false
