@@ -1,3 +1,4 @@
+# test properties
 sandbox:
   api:
     uri: http://dev.metabuild.org:8080
