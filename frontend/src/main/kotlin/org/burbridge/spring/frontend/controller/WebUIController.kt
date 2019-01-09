@@ -11,4 +11,9 @@ class WebUIController {
     fun home(model: Model): String {
         return "home"
     }
+
+    @RequestMapping("/login")
+    fun login(model: Model): String {
+        return "login"
+    }
 }
