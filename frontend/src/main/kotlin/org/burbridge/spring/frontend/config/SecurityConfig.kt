@@ -42,7 +42,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
             .and()
                 .formLogin()
                 .loginPage("/login")
-                .loginProcessingUrl("/perform_login")
+                .loginProcessingUrl("/login")
                 .defaultSuccessUrl("/home", true)
                 .failureUrl("/login?error=true")
             .and()

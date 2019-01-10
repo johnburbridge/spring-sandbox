@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 @Controller
 class WebUIController {
 
-    @RequestMapping("/")
+    @RequestMapping(path =  ["/", "/home"])
     fun home(model: Model): String {
         return "home"
     }
@@ -15,5 +15,10 @@ class WebUIController {
     @RequestMapping("/login")
     fun login(model: Model): String {
         return "login"
+    }
+
+    @RequestMapping("/admin")
+    fun admin(model: Model): String {
+        return "admin"
     }
 }
