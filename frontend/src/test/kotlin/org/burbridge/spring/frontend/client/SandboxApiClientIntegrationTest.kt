@@ -1,11 +1,11 @@
 package org.burbridge.spring.frontend.client
 
 import org.burbridge.spring.frontend.AbstractIntegrationTest
-import org.junit.jupiter.api.Assertions.assertNotNull
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.client.RestTemplate
+import org.junit.jupiter.api.Assertions.*
+import org.springframework.http.HttpStatus
+
 
 class SandboxApiClientIntegrationTest : AbstractIntegrationTest() {
 
@@ -14,8 +14,9 @@ class SandboxApiClientIntegrationTest : AbstractIntegrationTest() {
 
     @Test
     fun `Can authenticate with API`() {
-        val results = sandboxApiClient.getAllUsers()
+        val results = sandboxApiClient.authenticate("test@metabuild.org","test")
         assertNotNull(results)
-        assertTrue(results!!.total > 0)
+        assertEquals(HttpStatus.OK, results.statusCode)
+        assertEquals(listOf("ROLE_USER"), results.body)
     }
 }

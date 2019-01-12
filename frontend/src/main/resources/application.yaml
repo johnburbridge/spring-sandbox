@@ -17,6 +17,10 @@ sandbox:
     scheme: http
     host: dev.metabuild.org
     port: 8080
+    endpoints:
+      authorization: /auth
+      users: /users
+      tasks: /tasks
   admin:
     username: ${SANDBOX_ADMIN_USERNAME:admin@metabuild.org}
     password: ${SANDBOX_ADMIN_PASSWORD:Passw0rd}

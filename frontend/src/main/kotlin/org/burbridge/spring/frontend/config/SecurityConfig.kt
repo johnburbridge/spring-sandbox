@@ -1,32 +1,30 @@
 package org.burbridge.spring.frontend.config
 
+import org.burbridge.spring.frontend.security.RestAuthenticationProvider
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 
 @Configuration
 @EnableWebSecurity
 class SecurityConfig : WebSecurityConfigurerAdapter() {
 
+    @Autowired
+    lateinit var authProvider: RestAuthenticationProvider
+
     @Throws(Exception::class)
     override fun configure(auth: AuthenticationManagerBuilder) {
-        auth!!.inMemoryAuthentication()
-                .withUser("user@metabuild.org")
-                .password(passwordEncoder().encode("test"))
-                .roles("USER")
-            .and()
-                .withUser("admin@metabuild.org")
-                .password(passwordEncoder().encode("Passw0rd"))
-                .roles("ADMIN")
+        auth.authenticationProvider(authProvider)
     }
 
     @Throws(Exception::class)
-    protected override fun configure(http: HttpSecurity) {
+    override fun configure(http: HttpSecurity) {
         http
             .csrf().disable()
             .authorizeRequests()
@@ -40,13 +38,13 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                         "/webjars/**").permitAll()
                 .anyRequest().authenticated()
             .and()
-                .formLogin()
+            .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/home", true)
+                .defaultSuccessUrl("/home", false)
                 .failureUrl("/login?error=true")
             .and()
-                .logout()
+            .logout()
                 .logoutUrl("/perform_logout")
                 .deleteCookies("JSESSIONID")
                 .logoutSuccessUrl("/login?logout=true")
