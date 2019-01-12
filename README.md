@@ -22,3 +22,15 @@ http://dev.metabuild.org:8080/swagger-ui.html
 Username: user@metabuild.org
 Password: test
 ```
+
+You can run the front-end server by issuing:
+```
+gradle frontend:bootRun
+```
+
+And access it by going to:
+http://dev.metabuild.org:8081
+
+(same credentials)
+
+
