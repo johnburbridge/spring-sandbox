@@ -1,0 +1,20 @@
+version: '3'
+services:
+  api:
+    image: gcr.io/spring-sandbox-219017/sandbox-api
+    hostname: api
+    depends_on:
+      - redis
+    ports:
+      - "8080:8080"
+  frontend:
+    image: gcr.io/spring-sandbox-219017/sandbox-frontend
+    hostname: frontend
+    depends_on:
+      - api
+    environment:
+      - SANDBOX_API_HOST=api
+    ports:
+      - "8081:8081"
+  redis:
+    image: "redis:alpine"

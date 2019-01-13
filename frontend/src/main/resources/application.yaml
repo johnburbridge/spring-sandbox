@@ -15,7 +15,7 @@ sandbox:
   api:
     uri: http://dev.metabuild.org:8080
     scheme: http
-    host: dev.metabuild.org
+    host: ${SANDBOX_API_HOST:dev.metabuild.org}
     port: 8080
     endpoints:
       authorization: /auth
