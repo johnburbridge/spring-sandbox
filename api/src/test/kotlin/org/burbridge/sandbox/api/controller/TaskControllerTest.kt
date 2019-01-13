@@ -39,7 +39,7 @@ class TaskControllerTest {
                 description = "A test task",
                 content = """
                     Multi-line content goes
-                    hhere.
+                    here.
                 """.trimIndent()
         )
         `when`(taskRepository.saveAndFlush(any(Task::class.java))).thenReturn(taskStub)
