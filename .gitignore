@@ -17,4 +17,4 @@
 *.iml
 *.ipr
 */out/
-
+*/bin/

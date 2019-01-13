@@ -5,6 +5,7 @@ import org.burbridge.sandbox.api.domain.core.User
 import org.burbridge.sandbox.api.error.RecordNotFoundException
 import org.burbridge.sandbox.api.repository.core.UserRepository
 import org.burbridge.spring.common.dto.UserDto
+import org.burbridge.spring.common.dto.UsersResponse
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.http.HttpStatus
@@ -21,10 +22,10 @@ class UserController {
     lateinit var userRepository: UserRepository
 
     @GetMapping("/")
-    fun getAllUsers(): List<UserDto> {
+    fun getAllUsers(): UsersResponse {
         val users = userRepository.findAll()
         val usersDto = users.map { user -> user.toDto() }
-        return usersDto
+        return UsersResponse(total = usersDto.count(), offset = 0, users = usersDto)
     }
 
     @GetMapping("/{email}")

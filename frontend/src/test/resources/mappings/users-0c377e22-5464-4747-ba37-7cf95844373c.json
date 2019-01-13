@@ -1,0 +1,26 @@
+{
+  "id" : "0c377e22-5464-4747-ba37-7cf95844373c",
+  "name" : "users",
+  "request" : {
+    "url" : "/users/?offset=0",
+    "method" : "GET"
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "{\"total\":2,\"offset\":0,\"users\":[{\"id\":5,\"email\":\"admin@metabuild.org\",\"first_name\":\"John\",\"last_name\":\"Burbridge\",\"enabled\":true},{\"id\":6,\"email\":\"test@metabuild.org\",\"first_name\":\"Test\",\"last_name\":\"User\",\"enabled\":true}]}",
+    "headers" : {
+      "Set-Cookie" : "JSESSIONID=7EDCC509EAA9937B393668DDFD98937A; Path=/; HttpOnly",
+      "X-Content-Type-Options" : "nosniff",
+      "X-XSS-Protection" : "1; mode=block",
+      "Cache-Control" : "no-cache, no-store, max-age=0, must-revalidate",
+      "Pragma" : "no-cache",
+      "Expires" : "0",
+      "X-Frame-Options" : "DENY",
+      "Content-Type" : "application/json;charset=UTF-8",
+      "Date" : "Sun, 06 Jan 2019 19:55:35 GMT"
+    }
+  },
+  "uuid" : "0c377e22-5464-4747-ba37-7cf95844373c",
+  "persistent" : true,
+  "insertionIndex" : 2
+}

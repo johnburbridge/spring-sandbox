@@ -10,6 +10,7 @@ import org.burbridge.sandbox.api.repository.core.PrivilegeRepository
 import org.burbridge.sandbox.api.repository.core.RoleRepository
 import org.burbridge.sandbox.api.repository.core.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.ApplicationListener
 import org.springframework.context.event.ContextRefreshedEvent
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -22,6 +23,20 @@ private val logger = KotlinLogging.logger {}
 class InitialDataLoader : ApplicationListener<ContextRefreshedEvent> {
 
     var alreadySetup = false
+
+    @Value("\${sandbox.user.username}")
+    lateinit var sandboxUserUsername: String
+
+    @Value("\${sandbox.user.password}")
+    lateinit var sandboxUserPassword: String
+
+
+    @Value("\${sandbox.admin.username}")
+    lateinit var sandboxAdminUsername: String
+
+    @Value("\${sandbox.admin.password}")
+    lateinit var sandboxAdminPassword: String
+
 
     @Autowired
     lateinit var userRepository: UserRepository
@@ -54,20 +69,20 @@ class InitialDataLoader : ApplicationListener<ContextRefreshedEvent> {
         userRepository.saveAll(listOf(
                 User(
                     id = 1L,
-                    email = "johnb@metabuild.org",
+                    email = sandboxAdminUsername,
                     firstName = "John",
                     lastName = "Burbridge",
-                    password = encoder.encode("Passw0rd"),
+                    password = encoder.encode(sandboxAdminPassword),
                     enabled = true,
                     tokenExpired = false,
                     roles = listOf(adminRole)
                 ),
                 User(
                         id = 2L,
-                        email = "test@metabuild.org",
+                        email = sandboxUserUsername,
                         firstName = "Test",
                         lastName = "User",
-                        password = encoder.encode("test"),
+                        password = encoder.encode(sandboxUserPassword),
                         enabled = true,
                         tokenExpired = false,
                         roles = listOf(userRole)
