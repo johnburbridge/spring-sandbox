@@ -24,10 +24,6 @@ dependencyManagement {
     }
 }
 
-springBoot {
-    buildInfo()
-}
-
 bootJar {
     baseName = "${rootProject.name}-${project.name}"
 }
