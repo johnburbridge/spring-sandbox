@@ -14,6 +14,7 @@ class WebUIController {
     @GetMapping(path =  ["/", "/home"])
     fun home(request: WebRequest, model: Model): String {
         val principal = request.userPrincipal?.name
+        model.addAttribute("username", principal)
         logger.info { "Got / request from $principal" }
         return "home"
     }
