@@ -19,7 +19,7 @@ class AuthenticationSuccessHandlerImpl(
 
     @Throws(IOException::class, ServletException::class)
     override fun onAuthenticationSuccess(arg0: HttpServletRequest, arg1: HttpServletResponse, arg2: Authentication) {
-        userRepository!!.updateLastLogin(Date())
+        userRepository.updateLastLogin(Date())
     }
 
 }

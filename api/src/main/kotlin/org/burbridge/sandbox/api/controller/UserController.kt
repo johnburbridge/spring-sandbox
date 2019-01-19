@@ -4,6 +4,7 @@ import mu.KotlinLogging
 import org.burbridge.sandbox.api.domain.core.User
 import org.burbridge.sandbox.api.error.RecordNotFoundException
 import org.burbridge.sandbox.api.repository.core.UserRepository
+import org.burbridge.sandbox.api.service.core.UserService
 import org.burbridge.spring.common.dto.UserDto
 import org.burbridge.spring.common.dto.UsersResponse
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,14 +17,11 @@ private val logger = KotlinLogging.logger {}
 
 @RestController
 @RequestMapping(path = ["/users"], produces = [MediaType.APPLICATION_JSON_VALUE])
-class UserController {
-
-    @Autowired
-    lateinit var userRepository: UserRepository
+class UserController(@Autowired val userService: UserService) {
 
     @GetMapping("/")
     fun getAllUsers(): UsersResponse {
-        val users = userRepository.findAll()
+        val users = userService.findAll()
         val usersDto = users.map { user -> user.toDto() }
         return UsersResponse(total = usersDto.count(), offset = 0, users = usersDto)
     }
@@ -31,7 +29,7 @@ class UserController {
     @GetMapping("/{email}")
     fun getUserByEmail(@PathVariable email: String): UserDto {
         try {
-            val user = userRepository.findByEmail(email)
+            val user = userService.findByEmail(email)
             return user!!.toDto()
         } catch (exception: EmptyResultDataAccessException) {
             logger.error("Could not find user: $email", exception)
@@ -43,7 +41,7 @@ class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     fun createUser(@RequestBody userDto: UserDto): UserDto {
         val user = toEntity(userDto)
-        val userCreated = userRepository.saveAndFlush(user)
+        val userCreated = userService.save(user)
         return userCreated.toDto()
     }
 

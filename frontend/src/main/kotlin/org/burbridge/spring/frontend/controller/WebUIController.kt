@@ -15,12 +15,12 @@ class WebUIController {
     fun home(request: WebRequest, model: Model): String {
         val principal = request.userPrincipal?.name
         model.addAttribute("username", principal)
-        logger.info { "Got / request from $principal" }
+        logger.info { "Got /home request from $principal" }
         return "home"
     }
 
     @GetMapping("/login")
-    fun login(request: WebRequest, model: Model): String {
+    fun login(): String {
         return "login"
     }
 
@@ -29,5 +29,13 @@ class WebUIController {
         val principal = request.userPrincipal?.name
         logger.info { "Got /admin request from $principal" }
         return "admin"
+    }
+
+    @GetMapping("/noAccess")
+    fun denied(request: WebRequest, model: Model): String {
+        val principal = request.userPrincipal?.name
+        model.addAttribute("username", principal)
+        logger.info { "Denied request to $principal" }
+        return "denied"
     }
 }

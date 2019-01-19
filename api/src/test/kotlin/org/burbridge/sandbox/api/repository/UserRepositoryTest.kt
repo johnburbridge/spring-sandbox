@@ -28,4 +28,11 @@ class UserRepositoryTest : AbstractSeededIntegrationTest() {
         assertNotNull(user)
         assertTrue(encoder.matches("test", user!!.password))
     }
+
+    @Test
+    fun `Can query an admin by username`() {
+        val user = userRepository.findByEmail("admin@metabuild.org")
+        assertNotNull(user)
+        assertTrue(encoder.matches("Passw0rd", user!!.password))
+    }
 }
