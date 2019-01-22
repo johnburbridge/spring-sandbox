@@ -26,6 +26,11 @@ class SandboxApiClient(
         return restTemplate.getForObject(singleUserUri, UserDto::class.java)
     }
 
+    fun updateUser(userDto: UserDto): UserDto? {
+        val singleUserUri: URI = sandboxApiUriBuilder.getSingleUserURI(userDto.email)
+        return restTemplate.postForObject(singleUserUri, userDto, UserDto::class.java)
+    }
+
     fun authenticate(username: String, pass: String): ResponseEntity<MutableList<String>> {
         val entity = HttpEntity<Principal>(createHeaders(username, pass))
         val authenticationUri = sandboxApiUriBuilder.getAuthenticationURI()

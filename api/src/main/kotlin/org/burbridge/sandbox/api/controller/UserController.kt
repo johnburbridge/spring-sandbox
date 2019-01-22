@@ -3,7 +3,6 @@ package org.burbridge.sandbox.api.controller
 import mu.KotlinLogging
 import org.burbridge.sandbox.api.domain.core.User
 import org.burbridge.sandbox.api.error.RecordNotFoundException
-import org.burbridge.sandbox.api.repository.core.UserRepository
 import org.burbridge.sandbox.api.service.core.UserService
 import org.burbridge.spring.common.dto.UserDto
 import org.burbridge.spring.common.dto.UsersResponse
@@ -17,7 +16,10 @@ private val logger = KotlinLogging.logger {}
 
 @RestController
 @RequestMapping(path = ["/users"], produces = [MediaType.APPLICATION_JSON_VALUE])
-class UserController(@Autowired val userService: UserService) {
+class UserController {
+
+    @Autowired
+    lateinit var userService: UserService
 
     @GetMapping("/")
     fun getAllUsers(): UsersResponse {

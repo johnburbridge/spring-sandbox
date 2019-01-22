@@ -1,7 +1,6 @@
 package org.burbridge.sandbox.api.security
 
 import mu.KotlinLogging
-import org.burbridge.sandbox.api.repository.core.UserRepository
 import org.burbridge.sandbox.api.service.core.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.userdetails.UserDetails

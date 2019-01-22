@@ -9,11 +9,18 @@ server:
 spring:
   cache:
     type: simple
+  datasource:
+    url: jdbc:h2:~/.sandbox;AUTO_SERVER=TRUE;AUTO_SERVER_PORT=9090
   jpa:
     properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
       jadira:
         usertype:
           autoRegisterUserTypes: true
+    hibernate:
+      ddl-auto: create
+    show-sql: true
 sandbox:
   admin:
     username: ${SANDBOX_ADMIN_USERNAME:admin@metabuild.org}
