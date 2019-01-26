@@ -7,7 +7,7 @@ import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider
 import org.springframework.security.core.AuthenticationException
-import org.springframework.security.core.authority.AuthorityUtils
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -53,8 +53,10 @@ class RestAuthenticationProvider : AbstractUserDetailsAuthenticationProvider() {
             if (authenticationResponse.getStatusCode().value() == 401) {
                 return User("wrongUsername", "wrongPass", emptyList())
             }
-            val privileges = authenticationResponse.body
-            val authorities = AuthorityUtils.createAuthorityList(privileges?.toTypedArray().toString())
+            val roles = authenticationResponse.body.orEmpty()
+            val authorities = roles.map {
+                role -> SimpleGrantedAuthority(role)
+            }
             loadedUser = User(name, passwordEncoder.encode(password), authorities)
         } catch (ex: Exception) {
             throw AuthenticationServiceException("Could not retrieve Principal [$name] from API", ex)

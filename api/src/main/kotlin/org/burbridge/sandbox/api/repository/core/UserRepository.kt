@@ -11,6 +11,7 @@ import java.util.*
 
 @Repository
 interface UserRepository : JpaRepository<User, Long> {
+
     fun findByEmail(email: String): User?
 
     @Query("UPDATE User u SET u.lastLogin=:lastLogin WHERE u.email = ?#{ principal?.username }")

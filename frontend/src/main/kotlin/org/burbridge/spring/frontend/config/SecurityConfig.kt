@@ -48,6 +48,9 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                 .logoutUrl("/perform_logout")
                 .deleteCookies("JSESSIONID")
                 .logoutSuccessUrl("/login?logout=true")
+            .and()
+            .exceptionHandling()
+                .accessDeniedPage("/noAccess")
     }
 
     @Bean
