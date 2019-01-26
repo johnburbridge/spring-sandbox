@@ -35,7 +35,7 @@ class UserControllerTest {
     // TODO figure out why this doesn't work
     // https://discuss.kotlinlang.org/t/kotlin-junit-mockito/278
     //
-    // @Test
+//    @Test
     fun `Verify controller can create new user`() {
         // arrange
         val userStub = User(id = 0L,

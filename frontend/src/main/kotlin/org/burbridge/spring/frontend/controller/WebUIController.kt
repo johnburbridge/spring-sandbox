@@ -1,6 +1,8 @@
 package org.burbridge.spring.frontend.controller
 
 import mu.KotlinLogging
+import org.burbridge.spring.frontend.client.SandboxApiClient
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
@@ -10,6 +12,9 @@ private val logger = KotlinLogging.logger {}
 
 @Controller
 class WebUIController {
+
+    @Autowired
+    lateinit var sandboxApiClient: SandboxApiClient
 
     @GetMapping(path =  ["/", "/home"])
     fun home(request: WebRequest, model: Model): String {
@@ -27,6 +32,8 @@ class WebUIController {
     @GetMapping("/admin")
     fun admin(request: WebRequest, model: Model): String {
         val principal = request.userPrincipal?.name
+        val users = sandboxApiClient.getAllUsers()
+        model.addAttribute("users", users)
         logger.info { "Got /admin request from $principal" }
         return "admin"
     }

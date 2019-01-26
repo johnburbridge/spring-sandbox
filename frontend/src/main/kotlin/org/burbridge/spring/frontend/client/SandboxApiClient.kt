@@ -10,7 +10,6 @@ import org.springframework.web.client.RestTemplate
 import java.net.URI
 import java.security.Principal
 
-
 @Component
 class SandboxApiClient(
         @Autowired val restTemplate: RestTemplate,
@@ -26,9 +25,14 @@ class SandboxApiClient(
         return restTemplate.getForObject(singleUserUri, UserDto::class.java)
     }
 
-    fun updateUser(userDto: UserDto): UserDto? {
+    fun createUser(userDto: UserDto): UserDto? {
         val singleUserUri: URI = sandboxApiUriBuilder.getSingleUserURI(userDto.email)
         return restTemplate.postForObject(singleUserUri, userDto, UserDto::class.java)
+    }
+
+    fun updateUser(userDto: UserDto): UserDto? {
+        val singleUserUri: URI = sandboxApiUriBuilder.getSingleUserURI(userDto.email)
+        return restTemplate.patchForObject(singleUserUri, userDto, UserDto::class.java)
     }
 
     fun authenticate(username: String, pass: String): ResponseEntity<MutableList<String>> {
@@ -37,14 +41,13 @@ class SandboxApiClient(
         return restTemplate.exchange(authenticationUri, HttpMethod.GET, entity, mutableListOf<String>().javaClass)
     }
 
-    fun createHeaders(username: String, password: String): HttpHeaders {
+    private fun createHeaders(username: String, password: String): HttpHeaders {
         val headers = object : HttpHeaders() {
             init {
                 set(ACCEPT, MediaType.APPLICATION_JSON.toString())
             }
         }
-        val authorization = "$username:$password"
-        val basic = String(Base64.encodeBase64(authorization.toByteArray()))
+        val basic = String(Base64.encodeBase64("$username:$password".toByteArray()))
         headers.set("Authorization", "Basic $basic")
 
         return headers

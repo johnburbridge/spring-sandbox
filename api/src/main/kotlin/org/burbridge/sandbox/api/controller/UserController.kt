@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 private val logger = KotlinLogging.logger {}
@@ -39,11 +40,13 @@ class UserController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     fun createUser(@RequestBody userDto: UserDto): UserDto {
         val user = toEntity(userDto)
         val userCreated = userService.save(user)
+        logger.info("Created new user: ${userCreated.email}")
         return userCreated.toDto()
     }
 
