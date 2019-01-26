@@ -1,0 +1,26 @@
+{
+  "id" : "c6aaf3ae-5b47-45a2-84e6-b24bea48de86",
+  "name" : "auth",
+  "request" : {
+    "url" : "/auth",
+    "method" : "GET"
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[\"ROLE_USER\"]",
+    "headers" : {
+      "Set-Cookie" : "JSESSIONID=79DA19867417A0F724675551AD74BF60; Path=/; HttpOnly",
+      "X-Content-Type-Options" : "nosniff",
+      "X-XSS-Protection" : "1; mode=block",
+      "Cache-Control" : "no-cache, no-store, max-age=0, must-revalidate",
+      "Pragma" : "no-cache",
+      "Expires" : "0",
+      "X-Frame-Options" : "DENY",
+      "Content-Type" : "application/json;charset=UTF-8",
+      "Date" : "Sat, 26 Jan 2019 06:40:13 GMT"
+    }
+  },
+  "uuid" : "c6aaf3ae-5b47-45a2-84e6-b24bea48de86",
+  "persistent" : true,
+  "insertionIndex" : 4
+}

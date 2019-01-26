@@ -18,7 +18,7 @@ class BasicAuthIntegrationTest : AbstractSeededIntegrationTest() {
     lateinit var mockMvc: MockMvc
 
     @Test
-    @WithUserDetails(value = "test@metabuild.org", userDetailsServiceBeanName = "userDetailsService")
+    @WithUserDetails(value = "admin@metabuild.org", userDetailsServiceBeanName = "userDetailsService")
     fun `Can authenticate with a valid user`() {
         mockMvc.perform(get("/"))
                 .andExpect(status().`is`(301))
