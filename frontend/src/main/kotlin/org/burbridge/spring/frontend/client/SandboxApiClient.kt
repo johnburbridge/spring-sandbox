@@ -26,12 +26,12 @@ class SandboxApiClient(
     }
 
     fun createUser(userDto: UserDto): UserDto? {
-        val singleUserUri: URI = sandboxApiUriBuilder.getSingleUserURI(userDto.email)
+        val singleUserUri: URI = sandboxApiUriBuilder.getSingleUserURI(checkNotNull(userDto.email))
         return restTemplate.postForObject(singleUserUri, userDto, UserDto::class.java)
     }
 
     fun updateUser(userDto: UserDto): UserDto? {
-        val singleUserUri: URI = sandboxApiUriBuilder.getSingleUserURI(userDto.email)
+        val singleUserUri: URI = sandboxApiUriBuilder.getSingleUserURI(checkNotNull(userDto.email))
         return restTemplate.patchForObject(singleUserUri, userDto, UserDto::class.java)
     }
 

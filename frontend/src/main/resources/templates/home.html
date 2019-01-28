@@ -1,13 +1,29 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org"
-      layout:decorate="~{fragments/layout}">
-<head>
-    <meta charset="UTF-8">
-    <title>Home Page</title>
+<html>
+<head th:replace="fragments/header :: header-includes">
+    <title>Static test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link rel='stylesheet' href='/webjars/bootstrap/css/bootstrap.min.css'>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.9/css/mdb.min.css" rel="stylesheet">
 </head>
 <body>
-<h1 th:text="'Welcome '+ ${username} + '!'"></h1>
-<span>Click <a href="/perform_logout">here</a> to logout.</span>
+<div th:replace="fragments/header :: header">Header</div>
+<div class="container">
+    <div class="hero-unit">
+        <h1>Welcome</h1>
+        <p>
+            Welcome to the Spring Sandbox!
+            <span th:text="'You are logged in as '+ ${username} + '.'"></span>
+        </p>
+        <p>
+            <a th:href="@{/registration}" class="btn btn-large btn-success">Sign up</a>
+        </p>
+    </div>
+    <div th:replace="fragments/footer :: footer">Footer</div>
+</div>
 </body>
 </html>

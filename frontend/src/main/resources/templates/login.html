@@ -2,10 +2,9 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{fragments/layout}">
-<head>
-    <title>Login</title>
-</head>
+<head th:replace="fragments/header :: header-includes">
 <body>
+<div th:replace="fragments/header :: header">Header</div>
 <h1>Login</h1>
 <form th:action="@{/perform_login}" method="post">
     <table>
@@ -22,5 +21,7 @@
         </tr>
     </table>
 </form>
+Click here to <a th:href="@{/registration}">register</a>.
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

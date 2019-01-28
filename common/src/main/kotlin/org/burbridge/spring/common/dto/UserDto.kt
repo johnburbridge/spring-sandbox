@@ -12,15 +12,18 @@ data class UserDto(
         @field:JsonProperty("password", access = JsonProperty.Access.WRITE_ONLY)
         val password: String? = null,
 
+        @field:JsonProperty("matchingPassword", access = JsonProperty.Access.WRITE_ONLY)
+        val matchingPassword: String? = null,
+
         @field:JsonProperty("email")
-        val email: String,
+        val email: String? = null,
 
         @field:JsonProperty("first_name")
-        val firstName: String,
+        val firstName: String? = null,
 
         @field:JsonProperty("last_name")
-        val lastName: String,
+        val lastName: String? = null,
 
         @field:JsonProperty("enabled")
-        val enabled: Boolean
+        val enabled: Boolean = true
 )

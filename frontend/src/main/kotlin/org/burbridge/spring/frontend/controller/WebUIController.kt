@@ -1,12 +1,14 @@
 package org.burbridge.spring.frontend.controller
 
 import mu.KotlinLogging
+import org.burbridge.spring.common.dto.UserDto
 import org.burbridge.spring.frontend.client.SandboxApiClient
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.context.request.WebRequest
+import java.security.Principal
 
 private val logger = KotlinLogging.logger {}
 
@@ -27,6 +29,12 @@ class WebUIController {
     @GetMapping("/login")
     fun login(): String {
         return "login"
+    }
+
+    @GetMapping("/registration")
+    fun register(request: WebRequest, model: Model): String {
+        model.addAttribute("user", UserDto())
+        return "register"
     }
 
     @GetMapping("/admin")

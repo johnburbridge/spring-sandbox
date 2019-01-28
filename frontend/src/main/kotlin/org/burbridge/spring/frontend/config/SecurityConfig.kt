@@ -32,6 +32,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                 .antMatchers("/anonymous*").anonymous()
                 .antMatchers(
                         "/login*",
+                        "/registration",
                         "/js/**",
                         "/css/**",
                         "/img/**",
