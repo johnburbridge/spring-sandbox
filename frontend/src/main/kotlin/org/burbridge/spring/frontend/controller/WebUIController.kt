@@ -51,7 +51,7 @@ class WebUIController(@Autowired
 
         val registeredUserDto: UserDto?
         if (!result.hasErrors()) {
-            registeredUserDto = sandboxApiClient.createUser(userDto)
+            registeredUserDto = sandboxApiClient.register(userDto)
             if (registeredUserDto == null) {
                 result.rejectValue("email","Unable to register this account")
                 model.addAttribute("user", userDto)

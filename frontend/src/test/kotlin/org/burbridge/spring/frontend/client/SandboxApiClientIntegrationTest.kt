@@ -34,6 +34,20 @@ class SandboxApiClientIntegrationTest : AbstractIntegrationTest() {
     }
 
     @Test
+    fun `Can register a new user`() {
+        val userDto = UserDto(id = 0,
+                firstName = "Tyler",
+                lastName = "Durden",
+                email = "tdurden@projectmayhem.org",
+                password = "Sp4c3M0nk3yz",
+                matchingPassword = "Sp4c3M0nk3yz")
+        val registeredUserDto = sandboxApiClient.register(userDto)
+        assertNotNull(registeredUserDto)
+        assertNotEquals(0, registeredUserDto?.id)
+        assertEquals(userDto.email, registeredUserDto?.email)
+    }
+
+    @Test
     fun `Cannot access a protected resource with wrong role`() {
         val results = sandboxApiClient.authenticate("test@metabuild.org","test")
         assertNotNull(results)
