@@ -4,25 +4,25 @@ import mu.KotlinLogging
 import org.burbridge.spring.common.dto.UserDto
 import org.burbridge.spring.frontend.client.SandboxApiClient
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.security.core.userdetails.User
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.context.request.WebRequest
-import java.security.Principal
 
 private val logger = KotlinLogging.logger {}
 
 @Controller
-class WebUIController {
-
-    @Autowired
-    lateinit var sandboxApiClient: SandboxApiClient
+class WebUIController(@Autowired
+                      val sandboxApiClient: SandboxApiClient) {
 
     @GetMapping(path =  ["/", "/home"])
-    fun home(request: WebRequest, model: Model): String {
-        val principal = request.userPrincipal?.name
-        model.addAttribute("username", principal)
-        logger.info { "Got /home request from $principal" }
+    fun home(model: Model, @AuthenticationPrincipal user: User): String {
+        model.addAttribute("principal", user)
+        model.addAttribute("username", user?.username)
+        logger.info { "Got /home request from ${user?.username}" }
         return "home"
     }
 

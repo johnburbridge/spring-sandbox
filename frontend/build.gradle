@@ -14,6 +14,8 @@ dependencies {
     compile('org.webjars:jquery:3.3.1-1')
     compile('org.webjars.npm:popper.js:1.14.3')
     testCompile("com.github.tomakehurst:wiremock-standalone:2.18.0")
+    testCompile('org.springframework.security:spring-security-test')
+
 }
 
 bootJar {

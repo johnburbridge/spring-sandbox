@@ -50,7 +50,7 @@ class RestAuthenticationProvider : AbstractUserDetailsAuthenticationProvider() {
         var loadedUser: UserDetails?
         try {
             val authenticationResponse = sandboxApiClient.authenticate(name, password)
-            if (authenticationResponse.getStatusCode().value() == 401) {
+            if (authenticationResponse.statusCode.value() == 401) {
                 return User("wrongUsername", "wrongPass", emptyList())
             }
             val roles = authenticationResponse.body.orEmpty()
