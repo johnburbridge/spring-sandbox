@@ -6,11 +6,15 @@ import org.burbridge.spring.frontend.client.SandboxApiClient
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.User
-import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
+import org.springframework.validation.BindingResult
+import org.springframework.validation.Errors
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.ModelAttribute
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.context.request.WebRequest
+import javax.validation.Valid
 
 private val logger = KotlinLogging.logger {}
 
@@ -21,8 +25,8 @@ class WebUIController(@Autowired
     @GetMapping(path =  ["/", "/home"])
     fun home(model: Model, @AuthenticationPrincipal user: User): String {
         model.addAttribute("principal", user)
-        model.addAttribute("username", user?.username)
-        logger.info { "Got /home request from ${user?.username}" }
+        model.addAttribute("username", user.username)
+        logger.info { "Got /home request from ${user.username}" }
         return "home"
     }
 
@@ -32,8 +36,35 @@ class WebUIController(@Autowired
     }
 
     @GetMapping("/registration")
-    fun register(request: WebRequest, model: Model): String {
+    fun registrationForm(request: WebRequest, model: Model): String {
         model.addAttribute("user", UserDto())
+        return "register"
+    }
+
+    @PostMapping("/registration")
+    fun registrationPost(@ModelAttribute("user")
+                         @Valid userDto: UserDto,
+                         result: BindingResult,
+                         request: WebRequest,
+                         errors: Errors,
+                         model: Model): String {
+
+        val registeredUserDto: UserDto?
+        if (!result.hasErrors()) {
+            registeredUserDto = sandboxApiClient.createUser(userDto)
+            if (registeredUserDto == null) {
+                result.rejectValue("email","Unable to register this account")
+                model.addAttribute("user", userDto)
+                return "register"
+            } else {
+                model.addAttribute("user", registeredUserDto)
+                return "home"
+            }
+        } else {
+            model.addAttribute("user", userDto)
+            return "register"
+        }
+
         return "register"
     }
 
