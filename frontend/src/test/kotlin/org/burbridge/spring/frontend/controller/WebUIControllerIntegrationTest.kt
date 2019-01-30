@@ -100,11 +100,6 @@ class WebUIControllerIntegrationTest : AbstractIntegrationTest() {
     @Test
     @WithAnonymousUser
     fun `Cannot register with un-matching passwords`() {
-        val getResult = mvc.perform(get("/registration"))
-        getResult.andDo(print())
-                .andExpect(status().isOk)
-                .andExpect(view().name("register"))
-
         val postResult = mvc.perform(post("/registration")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .content(EntityUtils.toString(UrlEncodedFormEntity(listOf(
@@ -114,8 +109,10 @@ class WebUIControllerIntegrationTest : AbstractIntegrationTest() {
                         BasicNameValuePair("password", "Sp4c3M0nk3yz"),
                         BasicNameValuePair("confirmPassword", "")
                 )))))
+        // response page is 200 OK but contains validation errors
         postResult.andDo(print())
                 .andExpect(status().isOk)
-                .andExpect(model().errorCount<MethodArgumentNotValidException>(1))
+                .andExpect(model().hasErrors<MethodArgumentNotValidException>())
+                .andExpect(model().attributeExists("user"))
     }
 }

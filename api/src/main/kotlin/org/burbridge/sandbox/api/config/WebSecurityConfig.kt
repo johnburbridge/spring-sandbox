@@ -26,8 +26,8 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/register").anonymous()
-                .antMatchers("/users/**","/swagger-ui.html").hasAnyRole("ADMIN","USER")
+                .antMatchers("/auth", "/register").permitAll()
+                .antMatchers("/users/**", "/swagger-ui.html", "/webjars/**").hasAnyRole("ADMIN","USER")
                 .anyRequest().authenticated()
                 .and()
             .httpBasic()

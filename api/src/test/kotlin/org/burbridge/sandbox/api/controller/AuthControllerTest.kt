@@ -18,8 +18,7 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
@@ -28,7 +27,7 @@ import java.net.URI
 @ExtendWith(SpringExtension::class)
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class PrincipalControllerTest {
+class AuthControllerTest {
 
     @Autowired
     private lateinit var context: WebApplicationContext
@@ -43,7 +42,6 @@ class PrincipalControllerTest {
     }
 
     @Test
-    @WithAnonymousUser
     fun `Valid user can authenticate`() {
 
         val result = mvc.perform(get(URI("http://localhost:8080/auth"))
@@ -86,7 +84,7 @@ class PrincipalControllerTest {
         result.andDo(print())
                 .andExpect(status().isCreated)
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(content().string("{\"id\":100,\"password\":\"Sp4c3M0nk3yz\",\"matchingPassword\":null,\"email\":\"tyler@projectmayhem.org\",\"first_name\":\"Tyler\",\"last_name\":\"Durden\",\"enabled\":true}"))
+                .andExpect(jsonPath("$.email").value("tyler@projectmayhem.org"))
     }
 
     @Test

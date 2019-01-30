@@ -34,7 +34,8 @@ data class User(
                         password = user.password,
                         firstName = user.firstName,
                         lastName = user.lastName,
-                        enabled = user.enabled
+                        enabled = user.enabled,
+                        lastLogin = user.lastLogin
                 )
         }
 }

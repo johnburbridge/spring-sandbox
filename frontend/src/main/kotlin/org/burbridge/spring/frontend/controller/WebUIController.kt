@@ -23,10 +23,10 @@ class WebUIController(@Autowired
                       val sandboxApiClient: SandboxApiClient) {
 
     @GetMapping(path =  ["/", "/home"])
-    fun home(model: Model, @AuthenticationPrincipal user: User): String {
-        model.addAttribute("principal", user)
-        model.addAttribute("username", user.username)
-        logger.info { "Got /home request from ${user.username}" }
+    fun home(model: Model, @AuthenticationPrincipal principal: User): String {
+        logger.info { "Got /home request from ${principal.username}" }
+        val user = sandboxApiClient.getUser(principal.username)
+        model.addAttribute("user", user)
         return "home"
     }
 

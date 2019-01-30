@@ -16,8 +16,9 @@
     <div class="hero-unit">
         <h1>Welcome</h1>
         <p>
-            Welcome to the Spring Sandbox!
-            <span th:text="'You are logged in as '+ ${username} + '.'"></span>
+        <h5>Welcome to the Spring Sandbox!</h5>
+        <span th:text="'You are logged in as '+ ${user.firstName} + '.'"></span>
+        <span th:text="'Your last login was on '+ ${user.lastLogin} + '.'"></span>
         </p>
         <p>
             <a th:href="@{/registration}" class="btn btn-large btn-success">Sign up</a>
