@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.context.WebApplicationContext
+import java.lang.Exception
 
 class WebUIControllerIntegrationTest : AbstractIntegrationTest() {
 
@@ -36,13 +37,17 @@ class WebUIControllerIntegrationTest : AbstractIntegrationTest() {
     }
 
     @Test
-    @WithMockUser("test@metabuild.org")
     fun `Can access home when authenticated`() {
 
-        val result = mvc.perform(get("/"))
-        result.andDo(print())
-                .andExpect(status().isOk)
-                .andExpect(view().name("home"))
+        val postResult = mvc.perform(post("/perform_login")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .content(EntityUtils.toString(UrlEncodedFormEntity(listOf(
+                        BasicNameValuePair("username", "test@metabuild.org"),
+                        BasicNameValuePair("password", "test")
+                )))))
+        postResult.andDo(print())
+                .andExpect(status().isFound)
+                .andExpect(redirectedUrl("/home"))
     }
 
     @Test
