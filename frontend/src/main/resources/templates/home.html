@@ -17,10 +17,10 @@
         <h1>Welcome</h1>
         <p>
             Welcome to the Spring Sandbox!
-            <span th:text="'You are logged in as '+ ${username} + '.'"></span>
+            <span th:text="'You are logged in as '+ ${user.firstName} + '.'"></span>
         </p>
         <p>
-            <a th:href="@{/registration}" class="btn btn-large btn-success">Sign up</a>
+            Not <span th:text="${user.firstName}"></span>? Click here to <a th:href="@{/logout}">logout</a>
         </p>
     </div>
     <div th:replace="fragments/footer :: footer">Footer</div>
