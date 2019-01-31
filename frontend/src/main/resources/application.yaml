@@ -11,6 +11,11 @@ spring:
     mode: HTML
     prefix: classpath:/templates/
     suffix: .html
+  redis:
+    host: ${SANDBOX_REDIS_HOST:dev.metabuild.org}
+    port: ${SANDBOX_REDIS_PORT:6379}
+  session:
+    store-type: redis
 sandbox:
   api:
     uri: http://dev.metabuild.org:8080
