@@ -18,3 +18,6 @@
 *.ipr
 */out/
 */bin/
+
+.DS_Store
+
