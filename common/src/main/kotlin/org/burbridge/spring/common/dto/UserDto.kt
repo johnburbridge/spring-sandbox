@@ -2,6 +2,7 @@ package org.burbridge.spring.common.dto
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.burbridge.spring.common.annotations.PasswordMatches
+import java.util.*
 import javax.annotation.Generated
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
@@ -11,7 +12,7 @@ import javax.validation.constraints.NotNull
 data class UserDto(
 
         @field:JsonProperty("id")
-        val id: Int? = null,
+        val id: Int = 0,
 
         @NotNull
         @NotBlank
@@ -37,5 +38,9 @@ data class UserDto(
         val lastName: String? = null,
 
         @field:JsonProperty("enabled")
-        val enabled: Boolean = true
+        val enabled: Boolean = true,
+
+
+        @field:JsonProperty("last_login")
+        val lastLogin: Date? = null
 )

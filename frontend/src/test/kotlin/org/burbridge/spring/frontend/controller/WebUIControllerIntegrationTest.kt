@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.context.WebApplicationContext
 
+
 class WebUIControllerIntegrationTest : AbstractIntegrationTest() {
 
     @Autowired
@@ -36,13 +37,17 @@ class WebUIControllerIntegrationTest : AbstractIntegrationTest() {
     }
 
     @Test
-    @WithMockUser("test@metabuild.org")
     fun `Can access home when authenticated`() {
 
-        val result = mvc.perform(get("/"))
-        result.andDo(print())
-                .andExpect(status().isOk)
-                .andExpect(view().name("home"))
+        val postResult = mvc.perform(post("/perform_login")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .content(EntityUtils.toString(UrlEncodedFormEntity(listOf(
+                        BasicNameValuePair("username", "test@metabuild.org"),
+                        BasicNameValuePair("password", "test")
+                )))))
+        postResult.andDo(print())
+                .andExpect(status().isFound)
+                .andExpect(redirectedUrl("/home"))
     }
 
     @Test
@@ -79,10 +84,6 @@ class WebUIControllerIntegrationTest : AbstractIntegrationTest() {
     @Test
     @WithAnonymousUser
     fun `Can register a valid user`() {
-        val getResult = mvc.perform(get("/registration"))
-        getResult.andDo(print())
-                .andExpect(status().isOk)
-                .andExpect(view().name("register"))
 
         val postResult = mvc.perform(post("/registration")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -100,10 +101,6 @@ class WebUIControllerIntegrationTest : AbstractIntegrationTest() {
     @Test
     @WithAnonymousUser
     fun `Cannot register with un-matching passwords`() {
-        val getResult = mvc.perform(get("/registration"))
-        getResult.andDo(print())
-                .andExpect(status().isOk)
-                .andExpect(view().name("register"))
 
         val postResult = mvc.perform(post("/registration")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -114,8 +111,10 @@ class WebUIControllerIntegrationTest : AbstractIntegrationTest() {
                         BasicNameValuePair("password", "Sp4c3M0nk3yz"),
                         BasicNameValuePair("confirmPassword", "")
                 )))))
+        // response page is 200 OK but contains validation errors
         postResult.andDo(print())
                 .andExpect(status().isOk)
-                .andExpect(model().errorCount<MethodArgumentNotValidException>(1))
+                .andExpect(model().hasErrors<MethodArgumentNotValidException>())
+                .andExpect(model().attributeExists("user"))
     }
 }

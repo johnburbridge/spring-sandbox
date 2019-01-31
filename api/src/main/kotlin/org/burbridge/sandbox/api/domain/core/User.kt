@@ -22,7 +22,7 @@ data class User(
         @JoinTable(name = "users_roles",
                 joinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")],
                 inverseJoinColumns = [JoinColumn(name = "role_id", referencedColumnName = "id")])
-        val roles: Collection<Role> = emptyList()
+        val roles: MutableCollection<Role> = arrayListOf()
 ) {
         fun toDto(): UserDto {
                 return toDto(this)
@@ -34,7 +34,8 @@ data class User(
                         password = user.password,
                         firstName = user.firstName,
                         lastName = user.lastName,
-                        enabled = user.enabled
+                        enabled = user.enabled,
+                        lastLogin = user.lastLogin
                 )
         }
 }

@@ -15,10 +15,11 @@
 <div class="container">
     <div class="hero-unit">
         <h1>Welcome</h1>
-        <p>
-            Welcome to the Spring Sandbox!
-            <span th:text="'You are logged in as '+ ${user.firstName} + '.'"></span>
-        </p>
+        <div>
+            <h5>Welcome to the Spring Sandbox!</h5>
+            You are logged in as <span th:text="${user.firstName}"></span>.
+            Your last login was on <span th:text="${user.lastLogin}"></span>.
+        </div>
         <p>
             Not <span th:text="${user.firstName}"></span>? Click here to <a th:href="@{/logout}">logout</a>
         </p>
