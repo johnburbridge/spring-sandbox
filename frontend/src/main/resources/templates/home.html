@@ -14,15 +14,14 @@
 <div th:replace="fragments/header :: header">Header</div>
 <div class="container">
     <div class="hero-unit">
-        <h1>Welcome</h1>
+        <h1 th:text="'Hello, ' + ${user.firstName} + '!'">Hello!</h1>
         <div>
-            <h5>Welcome to the Spring Sandbox!</h5>
-            You are logged in as <span th:text="${user.firstName}"></span>.
+            <h3>Welcome to the Spring Sandbox.</h3>
             Your last login was on <span th:text="${user.lastLogin}"></span>.
         </div>
-        <p>
-            Not <span th:text="${user.firstName}"></span>? Click here to <a th:href="@{/logout}">logout</a>
-        </p>
+        <small>
+            Not <span th:text="${user.firstName}"></span>? Click here to <a th:href="@{/perform_logout}">logout</a>
+        </small>
     </div>
     <div th:replace="fragments/footer :: footer">Footer</div>
 </div>

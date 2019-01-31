@@ -51,7 +51,7 @@ class UserController {
     }
 
     private fun toEntity(userDto: UserDto): User {
-        return User(id = userDto.id!!.toLong(),
+        return User(id = userDto.id.toLong(),
                 email = userDto.email!!,
                 password = userDto.password!!,
                 firstName = userDto.firstName!!,
