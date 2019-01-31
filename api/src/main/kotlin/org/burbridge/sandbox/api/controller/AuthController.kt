@@ -2,7 +2,7 @@ package org.burbridge.sandbox.api.controller
 
 import mu.KotlinLogging
 import org.burbridge.sandbox.api.domain.core.User
-import org.burbridge.sandbox.api.repository.core.UserRepository
+import org.burbridge.sandbox.api.service.core.UserService
 import org.burbridge.spring.common.dto.UserDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -18,7 +18,7 @@ private val logger = KotlinLogging.logger {}
 
 @RestController
 @RequestMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
-class PrincipalController(@Autowired val userRepository: UserRepository) {
+class PrincipalController(@Autowired val userService: UserService) {
 
     @Autowired
     lateinit var encoder: PasswordEncoder
@@ -27,17 +27,15 @@ class PrincipalController(@Autowired val userRepository: UserRepository) {
     fun getAuthorities(webRequest: WebRequest): List<String>? {
         val principal = webRequest.userPrincipal as UsernamePasswordAuthenticationToken
         logger.info { "Authorization request for ${principal.name} granted ${principal.authorities}" }
-        userRepository.updateLastLogin(Date())
+        userService.updateLastLogin(Date())
         return principal.authorities.map { it.authority }
     }
 
-    // TODO move repository calls to service
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     fun registerUser(@RequestBody @Valid userDto: UserDto): UserDto {
         val user = toEntity(userDto)
-        val userCreated = userRepository.saveAndFlush(user)
-        // TODO add default authority
+        val userCreated = userService.createWithDefaultRole(user)
         logger.info("Created new user: ${userCreated.email}")
         return user.toDto()
     }

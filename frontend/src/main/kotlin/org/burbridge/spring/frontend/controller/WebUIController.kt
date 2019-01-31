@@ -55,16 +55,13 @@ class WebUIController(@Autowired
             if (registeredUserDto == null) {
                 result.rejectValue("email","Unable to register this account")
                 model.addAttribute("user", userDto)
-                return "register"
             } else {
                 model.addAttribute("user", registeredUserDto)
                 return "home"
             }
         } else {
             model.addAttribute("user", userDto)
-            return "register"
         }
-
         return "register"
     }
 

@@ -43,7 +43,7 @@ class UserControllerTest {
                 lastName = "Test",
                 enabled = true,
                 tokenExpired = false,
-                roles = emptyList(),
+                roles = arrayListOf(),
                 lastLogin = null)
         `when`(userService.save(any(User::class.java))).thenReturn(userStub)
 

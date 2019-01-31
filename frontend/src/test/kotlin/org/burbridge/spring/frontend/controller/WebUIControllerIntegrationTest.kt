@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.context.WebApplicationContext
-import java.lang.Exception
+
 
 class WebUIControllerIntegrationTest : AbstractIntegrationTest() {
 
@@ -84,10 +84,6 @@ class WebUIControllerIntegrationTest : AbstractIntegrationTest() {
     @Test
     @WithAnonymousUser
     fun `Can register a valid user`() {
-        val getResult = mvc.perform(get("/registration"))
-        getResult.andDo(print())
-                .andExpect(status().isOk)
-                .andExpect(view().name("register"))
 
         val postResult = mvc.perform(post("/registration")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -105,6 +101,7 @@ class WebUIControllerIntegrationTest : AbstractIntegrationTest() {
     @Test
     @WithAnonymousUser
     fun `Cannot register with un-matching passwords`() {
+
         val postResult = mvc.perform(post("/registration")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .content(EntityUtils.toString(UrlEncodedFormEntity(listOf(
