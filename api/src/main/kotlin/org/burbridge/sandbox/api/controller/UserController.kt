@@ -51,11 +51,11 @@ class UserController {
     }
 
     private fun toEntity(userDto: UserDto): User {
-        return User(id = userDto.id!!.toLong(),
-                email = userDto.email,
+        return User(id = userDto.id.toLong(),
+                email = userDto.email!!,
                 password = userDto.password!!,
-                firstName = userDto.firstName,
-                lastName = userDto.lastName,
+                firstName = userDto.firstName!!,
+                lastName = userDto.lastName!!,
                 enabled = userDto.enabled
         )
     }

@@ -18,6 +18,9 @@ class SandboxApiUriBuilder(
     @Value("\${sandbox.api.endpoints.authorization}")
     lateinit var authorizationEndpoint: String
 
+    @Value("\${sandbox.api.endpoints.registration}")
+    lateinit var registrationEndpoint: String
+
     @Value("\${sandbox.api.endpoints.users}")
     lateinit var usersEndpoint: String
 
@@ -49,6 +52,16 @@ class SandboxApiUriBuilder(
                 .host(sandboxApiHost)
                 .port(sandboxApiPort)
                 .path(authorizationEndpoint)
+                .build()
+                .toUri()
+    }
+
+    fun getRegistrationURI(): URI {
+        return UriComponentsBuilder.newInstance()
+                .scheme(sandboxApiScheme)
+                .host(sandboxApiHost)
+                .port(sandboxApiPort)
+                .path(registrationEndpoint)
                 .build()
                 .toUri()
     }

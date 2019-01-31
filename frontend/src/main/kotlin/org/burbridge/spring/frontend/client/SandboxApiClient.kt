@@ -15,6 +15,17 @@ class SandboxApiClient(
         @Autowired val restTemplate: RestTemplate,
         @Autowired val sandboxApiUriBuilder: SandboxApiUriBuilder) {
 
+    fun authenticate(username: String, pass: String): ResponseEntity<MutableList<String>> {
+        val entity = HttpEntity<Principal>(createHeaders(username, pass))
+        val authenticationUri = sandboxApiUriBuilder.getAuthenticationURI()
+        return restTemplate.exchange(authenticationUri, HttpMethod.GET, entity, mutableListOf<String>().javaClass)
+    }
+
+    fun register(userDto: UserDto): UserDto? {
+        val registrationUri = sandboxApiUriBuilder.getRegistrationURI()
+        return restTemplate.postForObject(registrationUri, userDto, UserDto::class.java)
+    }
+
     fun getAllUsers(): UsersResponse? {
         val usersUri = sandboxApiUriBuilder.getUsersURI()
         return restTemplate.getForObject(usersUri, UsersResponse::class.java)
@@ -26,19 +37,13 @@ class SandboxApiClient(
     }
 
     fun createUser(userDto: UserDto): UserDto? {
-        val singleUserUri: URI = sandboxApiUriBuilder.getSingleUserURI(userDto.email)
+        val singleUserUri: URI = sandboxApiUriBuilder.getSingleUserURI(checkNotNull(userDto.email))
         return restTemplate.postForObject(singleUserUri, userDto, UserDto::class.java)
     }
 
     fun updateUser(userDto: UserDto): UserDto? {
-        val singleUserUri: URI = sandboxApiUriBuilder.getSingleUserURI(userDto.email)
+        val singleUserUri: URI = sandboxApiUriBuilder.getSingleUserURI(checkNotNull(userDto.email))
         return restTemplate.patchForObject(singleUserUri, userDto, UserDto::class.java)
-    }
-
-    fun authenticate(username: String, pass: String): ResponseEntity<MutableList<String>> {
-        val entity = HttpEntity<Principal>(createHeaders(username, pass))
-        val authenticationUri = sandboxApiUriBuilder.getAuthenticationURI()
-        return restTemplate.exchange(authenticationUri, HttpMethod.GET, entity, mutableListOf<String>().javaClass)
     }
 
     private fun createHeaders(username: String, password: String): HttpHeaders {

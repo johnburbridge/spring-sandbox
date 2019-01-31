@@ -75,7 +75,7 @@ class InitialDataLoader : ApplicationListener<ContextRefreshedEvent> {
                     password = encoder.encode(sandboxAdminPassword),
                     enabled = true,
                     tokenExpired = false,
-                    roles = listOf(adminRole)
+                    roles = arrayListOf(adminRole)
                 ),
                 User(
                         id = 2L,
@@ -85,7 +85,7 @@ class InitialDataLoader : ApplicationListener<ContextRefreshedEvent> {
                         password = encoder.encode(sandboxUserPassword),
                         enabled = true,
                         tokenExpired = false,
-                        roles = listOf(userRole)
+                        roles = arrayListOf(userRole)
                 ))
         )
         taskRepository.saveAll(setOf(

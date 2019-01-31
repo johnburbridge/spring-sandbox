@@ -19,5 +19,6 @@ sandbox:
     port: 8080
     endpoints:
       authorization: /auth
+      registration: /register
       users: /users
       tasks: /tasks

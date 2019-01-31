@@ -24,13 +24,13 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
-        http.httpBasic()
-                .and()
+        http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/swagger-ui/**,/actuator/**")
-                    .permitAll()
-                    .anyRequest()
-                    .authenticated()
+                .antMatchers("/auth", "/register").permitAll()
+                .antMatchers("/users/**", "/swagger-ui.html", "/webjars/**").hasAnyRole("ADMIN","USER")
+                .anyRequest().authenticated()
+                .and()
+            .httpBasic()
     }
 
     @Throws(Exception::class)

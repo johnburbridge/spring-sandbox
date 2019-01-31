@@ -2,12 +2,11 @@ package org.burbridge.spring.frontend.client
 
 import org.burbridge.spring.common.dto.UserDto
 import org.burbridge.spring.frontend.AbstractIntegrationTest
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.junit.jupiter.api.Assertions.*
 import org.springframework.http.HttpStatus
 import org.springframework.web.client.HttpClientErrorException
-
 
 class SandboxApiClientIntegrationTest : AbstractIntegrationTest() {
 
@@ -32,6 +31,20 @@ class SandboxApiClientIntegrationTest : AbstractIntegrationTest() {
         val moreResults = sandboxApiClient.getAllUsers()
         assertNotNull(moreResults)
         assertEquals(2, moreResults?.total)
+    }
+
+    @Test
+    fun `Can register a new user`() {
+        val userDto = UserDto(id = 0,
+                firstName = "Tyler",
+                lastName = "Durden",
+                email = "tdurden@projectmayhem.org",
+                password = "Sp4c3M0nk3yz",
+                matchingPassword = "Sp4c3M0nk3yz")
+        val registeredUserDto = sandboxApiClient.register(userDto)
+        assertNotNull(registeredUserDto)
+        assertNotEquals(0, registeredUserDto?.id)
+        assertEquals(userDto.email, registeredUserDto?.email)
     }
 
     @Test
