@@ -1,4 +1,21 @@
 # test properties
+spring:
+  profiles:
+    active: default,test
+  thymeleaf:
+    cache: false
+    enabled: true
+    check-template: true
+    check-template-location: true
+    encoding: UTF-8
+    mode: HTML
+    prefix: classpath:/templates/
+    suffix: .html
+  redis:
+    host: localhost
+    port: 6380 # ${random.int[63790,65536]}
+  session:
+    store-type: redis
 sandbox:
   api:
     uri: http://dev.metabuild.org:8080
@@ -17,5 +34,5 @@ sandbox:
     username: ${SANDBOX_TEST_USERNAME:test@metabuild.org}
     password: ${SANDBOX_TEST_PASSWORD:test}
 wiremock:
-  port: 9999
+  port: ${sandbox.api.port}
   record: false

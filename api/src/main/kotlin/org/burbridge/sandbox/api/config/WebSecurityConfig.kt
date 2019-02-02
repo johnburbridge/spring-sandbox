@@ -16,7 +16,6 @@ import org.springframework.security.data.repository.query.SecurityEvaluationCont
 
 @Configuration
 @EnableWebSecurity
-@Profile("default")
 class WebSecurityConfig : WebSecurityConfigurerAdapter() {
 
     @Autowired

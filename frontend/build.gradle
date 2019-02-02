@@ -15,8 +15,9 @@ dependencies {
     compile('org.webjars:font-awesome:5.6.1')
     compile('org.webjars:jquery:3.3.1-1')
     compile('org.webjars.npm:popper.js:1.14.3')
-    testCompile("com.github.tomakehurst:wiremock-standalone:2.18.0")
+    testCompile('com.github.tomakehurst:wiremock-standalone:2.18.0')
     testCompile('org.springframework.security:spring-security-test')
+    testCompile('com.github.kstyrc:embedded-redis:0.6')
 
 }
 
