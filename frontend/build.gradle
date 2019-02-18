@@ -27,8 +27,8 @@ bootJar {
 
 docker {
     dependsOn bootJar
-    name "gcr.io/spring-sandbox-219017/${bootJar.baseName}"
-    tag 'version', "${project.version}"
+    name "gcr.io/spring-sandbox-219017/${bootJar.baseName}:${project.version}"
+    tags 'latest'
     files bootJar.archivePath
     buildArgs(['JAR_FILE': "${bootJar.archiveName}"])
 }
