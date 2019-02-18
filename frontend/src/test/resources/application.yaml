@@ -12,8 +12,8 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
   redis:
-    host: localhost
-    port: 6380 # ${random.int[63790,65536]}
+    host: redis
+    port: 6379 # ${random.int[63790,65536]}
   session:
     store-type: redis
 sandbox:

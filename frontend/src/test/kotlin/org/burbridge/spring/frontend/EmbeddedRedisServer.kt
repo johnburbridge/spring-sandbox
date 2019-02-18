@@ -10,7 +10,7 @@ import javax.annotation.PreDestroy
 
 private val logger = KotlinLogging.logger {}
 
-@Component
+//@Component
 class EmbededRedisServer {
 
     @Value("\${spring.redis.port}")
