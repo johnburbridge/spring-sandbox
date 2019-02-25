@@ -13,12 +13,8 @@ pipeline {
             steps {
                 sh './gradlew -p api test jacocoTestReport'
                 junit(testResults: 'api/build/test-results/test/*.xml', allowEmptyResults: true)
-            }
-            steps {
                 sh './gradlew -p api bootJar'
                 archiveArtifacts 'api/build/libs/*.jar'
-            }
-            steps {
                 sh './gradlew -p api integrationTest jacocoTestReport '
                 jacoco(changeBuildStatus: false,
                         execPattern: '**/**.exec',
@@ -50,12 +46,8 @@ pipeline {
             steps {
                 sh './gradlew -p frontend test jacocoTestReport'
                 junit(testResults: 'frontend/build/test-results/test/*.xml', allowEmptyResults: true)
-            }
-            steps {
                 sh './gradlew -p frontend bootJar'
                 archiveArtifacts 'frontend/build/libs/*.jar'
-            }
-            steps {
                 sh './gradlew -p frontend integrationTest jacocoTestReport '
                 jacoco(changeBuildStatus: false,
                         execPattern: '**/**.exec',
