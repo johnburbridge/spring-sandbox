@@ -61,13 +61,15 @@ class WebUIController(@Autowired
             }
         } else {
             model.addAttribute("user", userDto)
+            model.addAttribute("errors", errors)
         }
         return "register"
     }
 
     @GetMapping("/admin")
-    fun admin(request: WebRequest, model: Model): String {
-        val principal = request.userPrincipal?.name
+    fun admin(model: Model, @AuthenticationPrincipal principal: User): String {
+        val user = sandboxApiClient.getUser(principal.username)
+        model.addAttribute("user", user)
         val users = sandboxApiClient.getAllUsers()
         model.addAttribute("users", users)
         logger.info { "Got /admin request from $principal" }

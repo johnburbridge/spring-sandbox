@@ -28,7 +28,7 @@ pipeline {
                         allowMissing         : false,
                         alwaysLinkToLastBuild: false,
                         keepAll              : true,
-                        reportDir            : 'build/reports/tests/jacoco',
+                        reportDir            : 'api/build/reports/tests/jacoco',
                         reportFiles          : 'index.html',
                         reportName           : 'API Coverage Report'
                 ])
@@ -61,7 +61,7 @@ pipeline {
                         allowMissing         : false,
                         alwaysLinkToLastBuild: false,
                         keepAll              : true,
-                        reportDir            : 'build/reports/tests/jacoco',
+                        reportDir            : 'frontend/build/reports/tests/jacoco',
                         reportFiles          : 'index.html',
                         reportName           : 'Frontend Coverage Report'
                 ])
