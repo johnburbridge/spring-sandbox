@@ -38,11 +38,12 @@ pipeline {
                   ])
         }
       }
-      stage('Publish API Container') {
-        steps {
-          sh './gradlew -p api docker dockerTagLatest dockerPush dockerPushLatest'
-        }
+    }
+    stage('Publish API Container') {
+      steps {
+        sh './gradlew -p api docker dockerTagLatest dockerPush dockerPushLatest'
       }
+    }
     stage('Build Frontend') {
       environment {
         SPRING_REDIS_HOST = 'redis'
