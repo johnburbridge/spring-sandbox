@@ -12,8 +12,8 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
   redis:
-    host: ${SANDBOX_REDIS_HOST:dev.metabuild.org}
-    port: ${SANDBOX_REDIS_PORT:6379}
+    host: ${SPRING_REDIS_HOST:dev.metabuild.org}
+    port: ${SPRING_REDIS_PORT:6379}
   session:
     store-type: redis
 sandbox:
@@ -21,7 +21,7 @@ sandbox:
     uri: http://dev.metabuild.org:8080
     scheme: http
     host: ${SANDBOX_API_HOST:dev.metabuild.org}
-    port: 8080
+    port: ${SANDBOX_API_PORT:8080}
     endpoints:
       authorization: /auth
       registration: /register

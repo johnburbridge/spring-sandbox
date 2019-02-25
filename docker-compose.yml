@@ -1,23 +1,47 @@
 version: '3'
+networks:
+  metabuild.org:
+
 services:
+  redis:
+    image: redis:alpine
+    hostname: redis
+    volumes:
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - 6379:6379
+    command: redis-server /usr/local/etc/redis/redis.conf
+    networks:
+      metabuild.org:
+        aliases:
+          - redis.metabuild.org
+
   api:
     image: gcr.io/spring-sandbox-219017/sandbox-api
     hostname: api
     ports:
-      - "8080:8080"
+      - 8080:8080
+    networks:
+      metabuild.org:
+        aliases:
+          - api.metabuild.org
+
   frontend:
     image: gcr.io/spring-sandbox-219017/sandbox-frontend
     hostname: frontend
-    depends_on:
+    links:
       - api
       - redis
     environment:
-      - SANDBOX_API_HOST=api
-      - SPRING_REDIS_HOST=redis
+      SANDBOX_API_HOST: api.metabuild.org
+      SANDBOX_API_PORT: 8080
+      SPRING_REDIS_HOST: redis.metabuild.org
+      SPRING_REDIS_PORT: 6379
     ports:
-      - "8081:8081"
-  redis:
-    image: "redis:alpine"
-    hostname: redis
-    ports:
-      - "6379:6379"
+      - 8081:8081
+    networks:
+      metabuild.org:
+        aliases:
+          - frontend.metabuild.org
+    extra_hosts:
+      - "dev.metabuild.org:192.168.1.114"
