@@ -17,8 +17,6 @@ dependencies {
     compile('org.webjars.npm:popper.js:1.14.3')
     testCompile('com.github.tomakehurst:wiremock-standalone:2.18.0')
     testCompile('org.springframework.security:spring-security-test')
-    testCompile('com.github.kstyrc:embedded-redis:0.6')
-
 }
 
 bootJar {
@@ -28,7 +26,7 @@ bootJar {
 docker {
     dependsOn bootJar
     name "gcr.io/spring-sandbox-219017/${bootJar.baseName}:${project.version}"
-    tags 'latest'
+    tag 'latest', "gcr.io/spring-sandbox-219017/${bootJar.baseName}:latest"
     files bootJar.archivePath
     buildArgs(['JAR_FILE': "${bootJar.archiveName}"])
 }

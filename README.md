@@ -24,7 +24,14 @@ And the front-end here:
 http://dev.metabuild.org:8081/home
 
 ```
-Username: user@metabuild.org
+Username: test@metabuild.org
 Password: test
 ```
 
+And the admin page here:
+http://dev.metabuild.org:8081/admin
+
+```
+Username: admin@metabuild.org
+Password: Passw0rd
+```
