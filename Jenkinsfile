@@ -1,12 +1,12 @@
 pipeline {
   agent any
   stages {
-    stage('Clean') {
+    stage('Clean All') {
       steps {
         sh './gradlew clean'
       }
     }
-    stage('Test') {
+    stage('Build API') {
       environment {
         SPRING_REDIS_HOST = 'redis'
       }
@@ -14,17 +14,20 @@ pipeline {
         sh './gradlew -p api test jacocoTestReport'
         junit(testResults: 'api/build/test-results/test/*.xml', allowEmptyResults: true)
       }
-    }
-    stage('Build') {
       steps {
-        sh './gradlew api:bootJar'
+        sh './gradlew -p api bootJar'
         archiveArtifacts 'api/build/libs/*.jar'
       }
-    }
-    stage('Integration Test') {
       steps {
         sh './gradlew -p api integrationTest jacocoTestReport '
-        jacoco(execPattern: '**/**.exec', classPattern: '**/classes', exclusionPattern: '**/*Test*.class,**/dto/*,**/model/*', sourcePattern: '**/src/main/kotlin', minimumLineCoverage: '75', minimumComplexityCoverage: '45', minimumMethodCoverage: '50')
+        jacoco(changeBuildStatus: false,
+          execPattern: '**/**.exec',
+          classPattern: '**/classes',
+          exclusionPattern: '**/*Test*.class,**/dto/*,**/model/*',
+          sourcePattern: '**/src/main/kotlin',
+          minimumLineCoverage: '60',
+          minimumComplexityCoverage: '45',
+          minimumMethodCoverage: '50')
         publishHTML([
                       allowMissing: false,
                       alwaysLinkToLastBuild: false,
@@ -35,31 +38,47 @@ pipeline {
                   ])
         }
       }
-      stage('Push Container') {
+      stage('Publish API Container') {
         steps {
-          sh './gradlew api:dockerPush'
+          sh './gradlew -p api docker dockerTagLatest dockerPush dockerPushLatest'
         }
       }
-      stage('FE Test') {
-        environment {
-          SPRING_REDIS_HOST = 'redis'
-        }
-        steps {
-          sh './gradlew -p frontend test jacocoTestReport '
-          junit(testResults: 'frontend/build/test-results/test/*.xml', allowEmptyResults: true)
-          jacoco(execPattern: '**/**.exec', exclusionPattern: '**/*Test*.class,**/*dto*/*,**/*model*/*', classPattern: '**/classes', minimumLineCoverage: '75', maximumMethodCoverage: '85', sourcePattern: '**/src/main/kotlin')
-        }
+    stage('Build Frontend') {
+      environment {
+        SPRING_REDIS_HOST = 'redis'
       }
-      stage('FE Build') {
-        steps {
-          sh './gradlew frontend:bootJar'
-          archiveArtifacts 'frontend/build/libs/*.jar'
-        }
+      steps {
+        sh './gradlew -p frontend test jacocoTestReport'
+        junit(testResults: 'frontend/build/test-results/test/*.xml', allowEmptyResults: true)
       }
-      stage('FE Container') {
-        steps {
-          sh './gradlew frontend:dockerPush'
-        }
+      steps {
+        sh './gradlew -p frontend bootJar'
+        archiveArtifacts 'frontend/build/libs/*.jar'
+      }
+      steps {
+        sh './gradlew -p frontend integrationTest jacocoTestReport '
+        jacoco(changeBuildStatus: false,
+            execPattern: '**/**.exec',
+            classPattern: '**/classes',
+            exclusionPattern: '**/*Test*.class,**/dto/*,**/model/*',
+            sourcePattern: '**/src/main/kotlin',
+            minimumLineCoverage: '60',
+            minimumComplexityCoverage: '45',
+            minimumMethodCoverage: '50')
+        publishHTML([
+                      allowMissing: false,
+                      alwaysLinkToLastBuild: false,
+                      keepAll: true,
+                      reportDir: 'build/reports/tests/jacoco',
+                      reportFiles: 'index.html',
+                      reportName: 'Frontend Coverage Report'
+                  ])
+      }
+    }
+    stage('Publish Frontend Container') {
+      steps {
+        sh './gradlew -p frontend docker dockerTagLatest dockerPush dockerPushLatest'
       }
     }
   }
+}
