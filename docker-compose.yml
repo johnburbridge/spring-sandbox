@@ -7,7 +7,7 @@ services:
     image: redis:alpine
     hostname: redis
     volumes:
-      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+      - ./config/redis/redis.conf:/usr/local/etc/redis/redis.conf
     ports:
       - 6379:6379
     command: redis-server /usr/local/etc/redis/redis.conf
@@ -44,4 +44,4 @@ services:
         aliases:
           - frontend.metabuild.org
     extra_hosts:
-      - "dev.metabuild.org:192.168.1.114"
+      - "dev.metabuild.org:127.0.0.1"
