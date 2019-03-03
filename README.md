@@ -13,7 +13,8 @@ You must setup an alias for _dev.metabuild.org_ mapping to _localhost_. I.e:
 ```
 ./gradlew clean test bootJar docker
 ```
-### Running
+### Running a minimal stack
+Using docker-compose for a single node for each service:
 ```
 docker-compose up -d
 ```
@@ -35,3 +36,12 @@ http://dev.metabuild.org:8081/admin
 Username: admin@metabuild.org
 Password: Passw0rd
 ```
+### Running a better stack
+Using docker swarm for multiple frontends and HAProxy:
+```
+docker swarm init
+docker stack deploy --compose-file=docker-swarm.yml dev
+```
+
+In addition to the services above, now you can also access HAProxy on port 80:
+http://dev.metabuild.org
