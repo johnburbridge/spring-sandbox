@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension
+import org.springframework.security.web.savedrequest.NullRequestCache
 
 @Configuration
 @EnableWebSecurity
@@ -27,8 +28,11 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
                 .antMatchers("/auth", "/register").permitAll()
                 .antMatchers("/users/**", "/swagger-ui.html", "/webjars/**").hasAnyRole("ADMIN","USER")
                 .anyRequest().authenticated()
-                .and()
-            .httpBasic()
+            .and()
+                .requestCache()
+                .requestCache(NullRequestCache())
+            .and()
+                .httpBasic()
     }
 
     @Throws(Exception::class)

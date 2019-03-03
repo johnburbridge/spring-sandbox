@@ -1,5 +1,6 @@
 package org.burbridge.sandbox.api.domain.core
 
+import java.io.Serializable
 import javax.persistence.*
 
 @Entity
@@ -17,4 +18,4 @@ data class Role(
                 joinColumns = [JoinColumn(name = "role_id", referencedColumnName = "id")],
                 inverseJoinColumns = [JoinColumn(name = "privilege_id", referencedColumnName = "id")])
         var privileges: Collection<Privilege> = emptyList()
-)
+) : Serializable

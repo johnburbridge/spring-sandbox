@@ -13,7 +13,7 @@ spring:
     suffix: .html
   redis:
     host: redis
-    port: 6379 # ${random.int[63790,65536]}
+    port: 6379
   session:
     store-type: redis
 sandbox:

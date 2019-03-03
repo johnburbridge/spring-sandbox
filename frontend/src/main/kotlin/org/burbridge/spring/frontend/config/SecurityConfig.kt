@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.web.savedrequest.NullRequestCache
 
 @Configuration
 @EnableWebSecurity
@@ -38,6 +39,9 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                         "/img/**",
                         "/webjars/**").permitAll()
                 .anyRequest().authenticated()
+            .and()
+                .requestCache()
+                .requestCache(NullRequestCache())
             .and()
             .formLogin()
                 .loginPage("/login")

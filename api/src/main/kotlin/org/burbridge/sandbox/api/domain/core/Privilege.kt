@@ -1,5 +1,6 @@
 package org.burbridge.sandbox.api.domain.core
 
+import java.io.Serializable
 import javax.persistence.*
 
 @Entity
@@ -10,4 +11,4 @@ data class Privilege(
         val name: String,
         @ManyToMany(mappedBy = "privileges")
         val roles: Collection<Role> = emptyList()
-)
+) : Serializable
