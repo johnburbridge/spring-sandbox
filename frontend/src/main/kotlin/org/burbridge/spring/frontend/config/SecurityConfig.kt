@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
+import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.savedrequest.NullRequestCache
@@ -26,7 +27,9 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
-        http
+        http.sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                .and()
             .csrf().disable()
             .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
@@ -39,21 +42,21 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                         "/img/**",
                         "/webjars/**").permitAll()
                 .anyRequest().authenticated()
-            .and()
-                .requestCache()
+                .and()
+            .requestCache()
                 .requestCache(NullRequestCache())
-            .and()
+                .and()
             .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/perform_login")
                 .defaultSuccessUrl("/home", false)
                 .failureUrl("/login?error=true")
-            .and()
+                .and()
             .logout()
                 .logoutUrl("/perform_logout")
                 .deleteCookies("JSESSIONID")
                 .logoutSuccessUrl("/login?logout=true")
-            .and()
+                .and()
             .exceptionHandling()
                 .accessDeniedPage("/noAccess")
     }

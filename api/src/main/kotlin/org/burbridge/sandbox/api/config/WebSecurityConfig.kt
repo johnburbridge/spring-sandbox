@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
+import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension
@@ -23,16 +24,19 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
-        http.csrf().disable()
+        http.sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.NEVER)
+                .and()
+            .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/auth", "/register").permitAll()
                 .antMatchers("/users/**", "/swagger-ui.html", "/webjars/**").hasAnyRole("ADMIN","USER")
                 .anyRequest().authenticated()
-            .and()
-                .requestCache()
+                .and()
+            .requestCache()
                 .requestCache(NullRequestCache())
-            .and()
-                .httpBasic()
+                .and()
+            .httpBasic()
     }
 
     @Throws(Exception::class)

@@ -9,6 +9,9 @@ import org.springframework.context.annotation.PropertySource
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory
 import org.springframework.session.web.context.AbstractHttpSessionApplicationInitializer
+import org.springframework.security.web.session.HttpSessionEventPublisher
+
+
 
 private val logger = KotlinLogging.logger {}
 
@@ -27,5 +30,10 @@ class SessionConfig : AbstractHttpSessionApplicationInitializer() {
     fun connectionFactory(): LettuceConnectionFactory {
         logger.info { "Connecting to redis server $springRedisHost:$springRedisPort" }
         return LettuceConnectionFactory(springRedisHost, springRedisPort.toInt())
+    }
+
+    @Bean
+    fun httpSessionEventPublisher(): HttpSessionEventPublisher {
+        return HttpSessionEventPublisher()
     }
 }

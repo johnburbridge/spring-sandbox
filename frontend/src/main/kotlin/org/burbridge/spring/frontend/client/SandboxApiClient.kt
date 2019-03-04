@@ -5,6 +5,8 @@ import org.burbridge.spring.common.dto.UserDto
 import org.burbridge.spring.common.dto.UsersResponse
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.*
+import org.springframework.http.client.support.BasicAuthenticationInterceptor
+import org.springframework.http.client.support.BasicAuthorizationInterceptor
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
 import java.net.URI
@@ -16,9 +18,9 @@ class SandboxApiClient(
         @Autowired val sandboxApiUriBuilder: SandboxApiUriBuilder) {
 
     fun authenticate(username: String, pass: String): ResponseEntity<MutableList<String>> {
-        val entity = HttpEntity<Principal>(createHeaders(username, pass))
+        restTemplate.interceptors.add(BasicAuthenticationInterceptor(username,pass))
         val authenticationUri = sandboxApiUriBuilder.getAuthenticationURI()
-        return restTemplate.exchange(authenticationUri, HttpMethod.GET, entity, mutableListOf<String>().javaClass)
+        return restTemplate.exchange(authenticationUri, HttpMethod.GET, null, mutableListOf<String>().javaClass)
     }
 
     fun register(userDto: UserDto): UserDto? {
@@ -44,17 +46,5 @@ class SandboxApiClient(
     fun updateUser(userDto: UserDto): UserDto? {
         val singleUserUri: URI = sandboxApiUriBuilder.getSingleUserURI(checkNotNull(userDto.email))
         return restTemplate.patchForObject(singleUserUri, userDto, UserDto::class.java)
-    }
-
-    private fun createHeaders(username: String, password: String): HttpHeaders {
-        val headers = object : HttpHeaders() {
-            init {
-                set(ACCEPT, MediaType.APPLICATION_JSON.toString())
-            }
-        }
-        val basic = String(Base64.encodeBase64("$username:$password".toByteArray()))
-        headers.set("Authorization", "Basic $basic")
-
-        return headers
     }
 }
