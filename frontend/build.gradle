@@ -7,15 +7,16 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.boot:spring-boot-starter-data-redis')
+    compile('org.springframework.session:spring-session-data-redis:2.1.4.RELEASE')
     compile('org.apache.httpcomponents:httpclient:4.5')
     compile('org.webjars:webjars-locator:0.35')
     compile('org.webjars:bootstrap:4.2.1')
     compile('org.webjars:font-awesome:5.6.1')
     compile('org.webjars:jquery:3.3.1-1')
     compile('org.webjars.npm:popper.js:1.14.3')
-    testCompile("com.github.tomakehurst:wiremock-standalone:2.18.0")
+    testCompile('com.github.tomakehurst:wiremock-standalone:2.18.0')
     testCompile('org.springframework.security:spring-security-test')
-
 }
 
 bootJar {
@@ -24,8 +25,9 @@ bootJar {
 
 docker {
     dependsOn bootJar
-    name "gcr.io/spring-sandbox-219017/${bootJar.baseName}"
-    tags "${project.version}"
+    name "gcr.io/spring-sandbox-219017/${bootJar.baseName}:${project.version}"
+    tag 'latest', "gcr.io/spring-sandbox-219017/${bootJar.baseName}:latest"
     files bootJar.archivePath
     buildArgs(['JAR_FILE': "${bootJar.archiveName}"])
 }
+
