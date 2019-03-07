@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        kotlinVersion = '1.3.20'
+        kotlinVersion = '1.3.21'
         springBootVersion = '2.1.2.RELEASE'
         dockerVersion = '0.21.0'
     }
@@ -36,7 +36,7 @@ subprojects {
     targetCompatibility = 1.8
 
     ext {
-        springBootVersion = '2.0.7.RELEASE'
+        springBootVersion = '2.1.3.RELEASE'
         springCloudVersion = 'Finchley.RELEASE'
     }
 

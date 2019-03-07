@@ -27,10 +27,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
-        http.sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                .and()
-            .csrf().disable()
+        http.csrf().disable()
             .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/anonymous*").anonymous()
@@ -42,9 +39,6 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                         "/img/**",
                         "/webjars/**").permitAll()
                 .anyRequest().authenticated()
-                .and()
-            .requestCache()
-                .requestCache(NullRequestCache())
                 .and()
             .formLogin()
                 .loginPage("/login")
