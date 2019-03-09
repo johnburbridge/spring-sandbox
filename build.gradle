@@ -30,7 +30,7 @@ subprojects {
     apply plugin: 'io.spring.dependency-management'
     
     group = "org.burbridge.${rootProject.name}.${project.name}"
-    version = '0.0.7-SNAPSHOT'
+    version = '0.0.8-SNAPSHOT'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
