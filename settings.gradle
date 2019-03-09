@@ -1,2 +1,2 @@
 rootProject.name = 'sandbox'
-include 'api','common','frontend'
+include 'api','auth','common','frontend'
