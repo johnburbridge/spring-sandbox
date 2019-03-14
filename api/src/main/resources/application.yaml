@@ -10,11 +10,13 @@ spring:
   cache:
     type: simple
   datasource:
-    url: jdbc:h2:~/.sandbox;AUTO_SERVER=TRUE;AUTO_SERVER_PORT=9090
+    url: jdbc:mysql://localhost:3306/sandbox_api
+    username: sandbox
+    password: ${SANDBOX_ADMIN_PASSWORD:Passw0rd}
   jpa:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
       jadira:
         usertype:
           autoRegisterUserTypes: true
