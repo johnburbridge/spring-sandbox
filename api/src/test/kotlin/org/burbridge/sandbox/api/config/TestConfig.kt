@@ -8,7 +8,7 @@ import org.springframework.context.annotation.PropertySource
 
 @Configuration
 @Profile("test")
-@PropertySource("classpath:test.properties")
+@PropertySource("classpath:application-test.properties")
 class TestConfig  {
 
     @Bean

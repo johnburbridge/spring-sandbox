@@ -2,6 +2,7 @@ package org.burbridge.sandbox.api.controller
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.apache.tomcat.util.codec.binary.Base64
+import org.burbridge.sandbox.api.AbstractSeededIntegrationTest
 import org.burbridge.spring.common.dto.UserDto
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
@@ -13,6 +14,7 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.security.test.context.support.WithAnonymousUser
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers
+import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
@@ -24,10 +26,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
 import java.net.URI
 
-@ExtendWith(SpringExtension::class)
-@SpringBootTest
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class AuthControllerTest {
+class AuthControllerIntegrationTest : AbstractSeededIntegrationTest() {
 
     @Autowired
     private lateinit var context: WebApplicationContext

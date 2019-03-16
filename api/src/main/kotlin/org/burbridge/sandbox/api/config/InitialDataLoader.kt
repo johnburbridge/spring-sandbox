@@ -57,7 +57,7 @@ class InitialDataLoader : ApplicationListener<ContextRefreshedEvent> {
 
     @Transactional
     fun initialize() {
-        logger.info { "alreadySetup = $alreadySetup" }
+        logger.debug { "initialize(): alreadySetup = $alreadySetup" }
         if (alreadySetup) return
 
         val readPrivilege = createPrivilegeIfNotFound("READ_PRIVILEGE")
@@ -120,6 +120,7 @@ class InitialDataLoader : ApplicationListener<ContextRefreshedEvent> {
     }
 
     fun clean() {
+        logger.debug { "clean(): alreadySetup = $alreadySetup" }
         if (!alreadySetup) return
         taskRepository.deleteAll()
         userRepository.deleteAll()
